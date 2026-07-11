@@ -13,12 +13,12 @@ const PRODUCTS = {
     {id:3,  name:'حذاء Nike Air Max 270',        cat:'أحذية رجالية',       img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80', price:110,  oldPrice:145, badge:'sale', stars:4.8, reviews:310, tab:'men'},
     {id:4,  name:'حقيبة كتف شانيل جلد طبيعي',     cat:'حقائب نسائية',       img:'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=400&q=80', price:240, oldPrice:320, badge:'hot',  stars:4.8, reviews:167, tab:'women'},
     {id:5,  name:'طاولة طعام خشب زان 6 كراسي',   cat:'أثاث منزلي',        img:'https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=400&q=80',price:450, oldPrice:600,badge:'sale',  stars:4.7, reviews:84,  tab:'home'},
-    {id:6,  name:'ساعة Apple Watch Ultra 2',   cat:'إلكترونيات ذكية',  img:'https://images.unsplash.com/photo-1434493789847-2f02bca0f008?w=400&q=80', price:799, oldPrice:null, badge:'new', stars:4.9, reviews:445, tab:'electronics'},
+    {id:6,  name:'ساعة Apple Watch Ultra 2',   cat:'إلكترونيات ذكية',  img:'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&q=80', price:799, oldPrice:null, badge:'new', stars:4.9, reviews:445, tab:'electronics'},
     {id:7,  name:'فستان سهرة تركي مطرز',       cat:'ملابس نسائية',img:'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&q=80', price:120,  oldPrice:180,  badge:'sale', stars:4.6, reviews:290, tab:'women'},
-    {id:8,  name:'عجانة كينوود 1200 واط',         cat:'أجهزة مطبخ',        img:'https://images.unsplash.com/photo-1594385208974-2e75f8d7bb48?w=400&q=80',price:280,oldPrice:350,badge:'hot',  stars:4.8, reviews:112,  tab:'home'},
-    {id:9,  name:'عطر ديور سوفاج 100مل',        cat:'عطور رجالية', img:'https://images.unsplash.com/photo-1523293115678-d290274f83b2?w=400&q=80', price:135,  oldPrice:160, badge:'best',  stars:4.9, reviews:678, tab:'men'},
+    {id:8,  name:'عجانة كينوود 1200 واط',         cat:'أجهزة مطبخ',        img:'https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=400&q=80',price:280,oldPrice:350,badge:'hot',  stars:4.8, reviews:112,  tab:'home'},
+    {id:9,  name:'عطر ديور سوفاج 100مل',        cat:'عطور رجالية', img:'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400&q=80', price:135,  oldPrice:160, badge:'best',  stars:4.9, reviews:678, tab:'men'},
     {id:10, name:'سماعات Sony WH-1000XM5',         cat:'إلكترونيات',  img:'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&q=80', price:348, oldPrice:399, badge:'sale', stars:4.8, reviews:812, tab:'electronics'},
-    {id:11, name:'طقم ذهب عيار 21 إماراتي',         cat:'مجوهرات',     img:'https://images.unsplash.com/photo-1605100804763-247f679f220a?w=400&q=80', price:1250, oldPrice:null,badge:'new',  stars:5.0, reviews:43,  tab:'women'},
+    {id:11, name:'طقم ذهب عيار 21 إماراتي',         cat:'مجوهرات',     img:'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80', price:1250, oldPrice:null,badge:'new',  stars:5.0, reviews:43,  tab:'women'},
     {id:12, name:'جاكيت جلد طبيعي Massimo',          cat:'ملابس رجالية',img:'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80', price:195,  oldPrice:250,  badge:'sale', stars:4.7, reviews:188, tab:'men'},
   ],
   new: [
@@ -33,9 +33,10 @@ const PRODUCTS = {
   ],
   flash: [
     {id:21, name:'آيفون 15 برو 256GB',           cat:'إلكترونيات',  img:'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400&q=80', price:999, oldPrice:1199, badge:'sale', stars:4.9, reviews:1892},
-    {id:22, name:'مقلاية هوائية فيليبس 7لتر',          cat:'أجهزة مطبخ',       img:'https://images.unsplash.com/photo-1586208558913-9ecf79a9bd28?w=400&q=80', price:145,  oldPrice:220, badge:'hot',  stars:4.8, reviews:943},
+    {id:22, name:'مقلاية هوائية فيليبس 7لتر',          cat:'أجهزة مطبخ',       img:'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=400&q=80', price:145,  oldPrice:220, badge:'hot',  stars:4.8, reviews:943},
     {id:23, name:'طقم حقائب لويس فيتون',               cat:'حقائب فاخرة',       img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80', price:450, oldPrice:750, badge:'sale', stars:4.9, reviews:317},
     {id:24, name:'بلايستيشن 5 سليم 1TB',         cat:'إلكترونيات',  img:'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&q=80', price:480, oldPrice:550,badge:'sale', stars:4.9, reviews:1431},
+    {id:25, name:'طائرة درون DJI Mini 4 Pro',          cat:'إلكترونيات',  img:'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=400&q=80', price:3200, oldPrice:3800, badge:'new', stars:5.0, reviews:412},
   ]
 };
 
