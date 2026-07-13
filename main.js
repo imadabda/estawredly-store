@@ -317,7 +317,7 @@ function goSlide(i) {
 function changeSlide(dir) { goSlide(state.slideIndex+dir); resetSlideTimer(); }
 function resetSlideTimer() {
   clearInterval(state.slideTimer);
-  state.slideTimer = setInterval(()=>goSlide(state.slideIndex+1), 5000);
+  state.slideTimer = setInterval(()=>goSlide(state.slideIndex+1), 3000);
 }
 window.goSlide   = goSlide;
 window.changeSlide = changeSlide;

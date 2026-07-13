@@ -921,9 +921,7 @@ input,select,textarea{font-family:inherit}
   .slide-content{padding:0;text-align:center;display:flex;flex-direction:column;align-items:center;width:100%}
   .slide-title{font-size:22px;line-height:1.4;margin-bottom:10px;padding:0 45px;word-break:keep-all}
   .slide-desc{font-size:13px;margin-bottom:15px;line-height:1.5;text-align:center;padding:0 45px}
-  .slider-prev,.slider-next{width:30px;height:30px;font-size:14px}
-  .slider-prev{right:5px}
-  .slider-next{left:5px}
+
   .slide-btns{gap:10px;justify-content:center;width:100%}
   .slide-btns .btn{padding:10px 16px;font-size:13px;flex:1;max-width:140px}
   .nav-list{flex-direction:column;width:100%;gap:4px}
