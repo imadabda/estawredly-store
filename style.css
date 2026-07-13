@@ -918,9 +918,9 @@ input,select,textarea{font-family:inherit}
   .main-nav.open{opacity:1;visibility:visible;transform:translateY(0);display:flex}
   .announce-inner{padding:0 30px}
   .announce-inner span{font-size:11px}
-  .slide-content{padding:0 50px;text-align:center;display:flex;flex-direction:column;align-items:center}
-  .slide-title{font-size:22px;line-height:1.4;margin-bottom:10px}
-  .slide-desc{font-size:13px;margin-bottom:15px;line-height:1.5;text-align:center}
+  .slide-content{padding:0;text-align:center;display:flex;flex-direction:column;align-items:center;width:100%}
+  .slide-title{font-size:22px;line-height:1.4;margin-bottom:10px;padding:0 45px;word-break:keep-all}
+  .slide-desc{font-size:13px;margin-bottom:15px;line-height:1.5;text-align:center;padding:0 45px}
   .slider-prev,.slider-next{width:30px;height:30px;font-size:14px}
   .slider-prev{right:5px}
   .slider-next{left:5px}
