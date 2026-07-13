@@ -918,14 +918,14 @@ input,select,textarea{font-family:inherit}
   .main-nav.open{opacity:1;visibility:visible;transform:translateY(0);display:flex}
   .announce-inner{padding:0 30px}
   .announce-inner span{font-size:11px}
-  .slide-content{padding:0 30px}
-  .slide-title{font-size:24px;line-height:1.4;margin-bottom:10px}
-  .slide-desc{font-size:12px;margin-bottom:15px;line-height:1.5;max-width:90%;margin-left:auto;margin-right:auto}
-  .slider-prev,.slider-next{width:36px;height:36px;font-size:16px}
+  .slide-content{padding:0 50px;text-align:center;display:flex;flex-direction:column;align-items:center}
+  .slide-title{font-size:22px;line-height:1.4;margin-bottom:10px}
+  .slide-desc{font-size:13px;margin-bottom:15px;line-height:1.5;text-align:center}
+  .slider-prev,.slider-next{width:30px;height:30px;font-size:14px}
   .slider-prev{right:5px}
   .slider-next{left:5px}
-  .slide-btns{gap:10px;justify-content:center}
-  .slide-btns .btn{padding:10px 20px;font-size:13px}
+  .slide-btns{gap:10px;justify-content:center;width:100%}
+  .slide-btns .btn{padding:10px 16px;font-size:13px;flex:1;max-width:140px}
   .nav-list{flex-direction:column;width:100%;gap:4px}
   .nav-a{font-size:16px;padding:14px 16px}
   .dd-panel{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:1px solid var(--gray2);flex-wrap:wrap}
