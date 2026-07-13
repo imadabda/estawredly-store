@@ -37,6 +37,18 @@ const PRODUCTS = {
     {"id": 27, "name": "ممسحة ملتوية (تويست)", "desc": "رأس ممسحة ملتوية من الألياف الدقيقة، مقبض معدني طول 130 سم، بخاصية القفل الذاتي.", "cat": "مماسح مسطحة", "code": "K19025", "img": "prod_flat.jpg", "price": 20, "oldPrice": 26, "badge": "new", "stars": 4.7, "reviews": 525},
     {"id": 28, "name": "ممسحة قطنية", "desc": "رأس ممسحة من القطن المخلوط وزن 450 جم، طول الخيوط 36 سم، مقبض معدني طول 130 سم بقطر 22 مم، حامل ممسحة بلاستيكي، التغليف: كيس شفاف + بطاقة ورقية.", "cat": "مماسح قطنية", "code": "GSA031", "img": "prod_cotton.jpg", "price": 26, "oldPrice": 34, "badge": "", "stars": 4.8, "reviews": 540},
     {"id": 29, "name": "ممسحة PVA السحرية", "desc": "رأس إسفنج PVA مقاس 27 سم قابل للاستبدال، مقبض من الفولاذ المقاوم للصدأ قابل للتطويل من 76 إلى 107 سم.", "cat": "مماسح مسطحة", "code": "GSA004", "img": "prod_flat.jpg", "price": 23, "oldPrice": 30, "badge": "", "stars": 4.9, "reviews": 555},
+
+    {"id": 11, "name": "Microfiber Mop refill", "desc": "K190008配布头", "cat": "قطع غيار", "code": "K19008-R", "img": "prod_micro_refill.jpg", "price": 11, "oldPrice": 14, "badge": "hot", "stars": 4.8, "reviews": 249},
+    {"id": 12, "name": "Microfiber Flat Mop", "desc": "粘扣式超细纤维拖把", "cat": "مماسح مايكروفايبر", "code": "KA2312", "img": "prod_micro_flat.jpg", "price": 30, "oldPrice": 39, "badge": "hot", "stars": 4.6, "reviews": 54},
+    {"id": 13, "name": "MOP REFILL", "desc": "拖把配布", "cat": "قطع غيار", "code": "R-KA2312", "img": "prod_cotton_refill.jpg", "price": 7, "oldPrice": 9, "badge": "new", "stars": 4.9, "reviews": 83},
+    {"id": 14, "name": "Microfiber Flat Mop", "desc": "超细纤维拖把", "cat": "مماسح مايكروفايبر", "code": "KA2315", "img": "prod_micro_flat.jpg", "price": 37, "oldPrice": 48, "badge": "new", "stars": 4.8, "reviews": 98},
+    {"id": 15, "name": "48CM Microfiber mop refill", "desc": "48CM圆头拖把布", "cat": "قطع غيار", "code": "R-KA2315", "img": "prod_micro_refill.jpg", "price": 13, "oldPrice": 16, "badge": "", "stars": 4.6, "reviews": 162},
+    {"id": 16, "name": "Cotton Mop", "desc": "棉纱平拖", "cat": "مماسح قطنية", "code": "KA2526", "img": "prod_cotton_mop.jpg", "price": 29, "oldPrice": 37, "badge": "new", "stars": 4.5, "reviews": 78},
+    {"id": 17, "name": "mix cotton Mop refill", "desc": "涤棉纱替换头", "cat": "قطع غيار", "code": "R-KA2526", "img": "prod_cotton_refill.jpg", "price": 13, "oldPrice": 16, "badge": "", "stars": 4.9, "reviews": 95},
+    {"id": 18, "name": "Cotton Mop 52cm", "desc": "52cm棉纱平拖", "cat": "مماسح قطنية", "code": "KA2523", "img": "prod_cotton_mop.jpg", "price": 41, "oldPrice": 53, "badge": "new", "stars": 4.8, "reviews": 204},
+    {"id": 19, "name": "Professional Cotton Mop", "desc": "60CM商务平拖
+GSA011", "cat": "مماسح قطنية", "code": "GSA011", "img": "prod_cotton_mop.jpg", "price": 42, "oldPrice": 54, "badge": "hot", "stars": 4.5, "reviews": 211},
+    {"id": 20, "name": "Cotton Mop refill", "desc": "60CM商务型棉纱平拖", "cat": "قطع غيار", "code": "GSR-A011", "img": "prod_cotton_refill.jpg", "price": 17, "oldPrice": 22, "badge": "hot", "stars": 4.7, "reviews": 69},
   ],
   flash: [
     {"id": 1, "name": "ممسحة مسطحة شينيل", "desc": "ممسحة مسطحة 40 سم، رأس ممسحة شينيل قابل للاستبدال، مقبض معدني قابل للتطويل من 73 إلى 130 سم بقطر 19-22 مم.", "cat": "قطع غيار", "code": "GSA001", "img": "prod_flat.jpg", "price": 20, "oldPrice": 26, "badge": "sale", "stars": 4.6, "reviews": 135},
