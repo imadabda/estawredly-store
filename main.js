@@ -46,8 +46,7 @@ const PRODUCTS = {
     {"id": 16, "name": "Cotton Mop", "desc": "棉纱平拖", "cat": "مماسح قطنية", "code": "KA2526", "img": "prod_cotton_mop.jpg", "price": 29, "oldPrice": 37, "badge": "new", "stars": 4.5, "reviews": 78},
     {"id": 17, "name": "mix cotton Mop refill", "desc": "涤棉纱替换头", "cat": "قطع غيار", "code": "R-KA2526", "img": "prod_cotton_refill.jpg", "price": 13, "oldPrice": 16, "badge": "", "stars": 4.9, "reviews": 95},
     {"id": 18, "name": "Cotton Mop 52cm", "desc": "52cm棉纱平拖", "cat": "مماسح قطنية", "code": "KA2523", "img": "prod_cotton_mop.jpg", "price": 41, "oldPrice": 53, "badge": "new", "stars": 4.8, "reviews": 204},
-    {"id": 19, "name": "Professional Cotton Mop", "desc": "60CM商务平拖
-GSA011", "cat": "مماسح قطنية", "code": "GSA011", "img": "prod_cotton_mop.jpg", "price": 42, "oldPrice": 54, "badge": "hot", "stars": 4.5, "reviews": 211},
+    {"id": 19, "name": "Professional Cotton Mop", "desc": "60CM商务平拖 GSA011", "cat": "مماسح قطنية", "code": "GSA011", "img": "prod_cotton_mop.jpg", "price": 42, "oldPrice": 54, "badge": "hot", "stars": 4.5, "reviews": 211},
     {"id": 20, "name": "Cotton Mop refill", "desc": "60CM商务型棉纱平拖", "cat": "قطع غيار", "code": "GSR-A011", "img": "prod_cotton_refill.jpg", "price": 17, "oldPrice": 22, "badge": "hot", "stars": 4.7, "reviews": 69},
   ],
   flash: [
