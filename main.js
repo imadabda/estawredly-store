@@ -556,31 +556,26 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('qv-close')?.addEventListener('click',()=>closeModal('qv'));
   document.getElementById('qv-mask')?.addEventListener('click', ()=>closeModal('qv'));
 
-  // Checkout handler
-  document.getElementById('checkout-btn')?.addEventListener('click', () => {
-    if (typeof Store === 'undefined' || !Store.isLoggedIn()) {
-      toast('يرجى تسجيل الدخول لإتمام الطلب', 'error');
-      window.openAuthModal && window.openAuthModal('login');
-      return;
-    }
-    const cart = state.cart;
-    if (!cart.length) { toast('السلة فارغة', 'error'); return; }
-    const user = Store.getCurrentUser();
-    const order = Store.addOrder({
-      userId: user.id,
-      userName: user.name,
-      userEmail: user.email,
-      userPhone: user.phone || '',
-      items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty, img: i.img })),
-      total: state.cartTotal(),
-      address: '',
-      notes: '',
+  // Checkout handlers (intercepting links)
+  document.querySelectorAll('.checkout-btn, .btn-buy-now').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // If the link is actually supposed to go to checkout.html
+      if (btn.getAttribute('href') === 'checkout.html') {
+        const cart = state.cart;
+        if (!cart || !cart.length) { 
+          e.preventDefault();
+          toast('السلة فارغة', 'error'); 
+          return; 
+        }
+        if (typeof Store === 'undefined' || !Store.isLoggedIn()) {
+          e.preventDefault();
+          toast('يرجى تسجيل الدخول لإتمام الطلب', 'error');
+          window.openAuthModal && window.openAuthModal('login');
+          return;
+        }
+        // let it navigate
+      }
     });
-    state.cart = [];
-    state.saveCart();
-    updateCartUI();
-    closeDrawer('cart');
-    toast('✅ تم استلام طلبك رقم ' + order.id + '! سنتواصل معك قريباً');
   });
 
   // Mobile Menu Toggle Fix
