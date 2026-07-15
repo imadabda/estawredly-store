@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <script src="products_db.js?v=12"></script>
+  <script src="store.js?v=12"></script>
   <link rel="stylesheet" href="style.css?v=12"/>
   <link rel="stylesheet" href="enhancements.css?v=12"/>
 </head>
@@ -746,13 +748,16 @@
   <div id="auth-login">
     <h2>مرحبًا بعودتك 👋</h2>
     <form id="login-form">
-      <div class="field"><label>البريد الإلكتروني</label><input type="email" placeholder="email@example.com"/></div>
-      <div class="field"><label>كلمة المرور</label><input type="password" placeholder="••••••••"/></div>
+      <div class="field"><label>البريد الإلكتروني</label><input type="email" id="login-email" placeholder="email@example.com"/></div>
+      <div class="field"><label>كلمة المرور</label><input type="password" id="login-password" placeholder="••••••••"/></div>
       <a href="#" class="forgot">نسيت كلمة المرور؟</a>
       <button type="submit" class="btn btn-primary w-full">دخول</button>
     </form>
     <div class="or-sep"><span>أو</span></div>
-    <button class="social-login-btn google">
+    <button type="button" id="google-login-btn" onclick="handleGoogleLogin()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;color:#333;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-bottom:16px;transition:.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='#fff'">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      تسجيل الدخول بـ Google
+    </button>
       <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.26 9.77A7.77 7.77 0 0 1 12 4.23c1.8 0 3.42.62 4.7 1.64l3.5-3.5A13 13 0 0 0 12 0 13 13 0 0 0 .7 7.48l4.56 2.29z"/><path fill="#34A853" d="M16.04 18.01A7.77 7.77 0 0 1 12 19.77a7.77 7.77 0 0 1-6.74-3.93L.7 18.1A13 13 0 0 0 12 24a13 13 0 0 0 8.78-3.43l-4.74-2.56z"/><path fill="#4A90D9" d="M20.78 18.57A13 13 0 0 0 25 12c0-.76-.08-1.56-.23-2.32H12v4.64h7.38A6.22 6.22 0 0 1 16.04 18l4.74 2.57z"/><path fill="#FBBC05" d="M5.26 14.23A7.77 7.77 0 0 1 4.23 12c0-.77.12-1.52.31-2.23L.04 7.48A13 13 0 0 0 0 12a13 13 0 0 0 .7 4.14l4.56-1.91z"/></svg>
       تسجيل بحساب جوجل
     </button>
@@ -760,9 +765,15 @@
   <div id="auth-signup" style="display:none">
     <h2>إنشاء حساب جديد 🎉</h2>
     <form id="signup-form">
-      <div class="field"><label>الاسم الكامل</label><input type="text" placeholder="الاسم الكامل"/></div>
-      <div class="field"><label>البريد الإلكتروني</label><input type="email" placeholder="email@example.com"/></div>
-      <div class="field"><label>كلمة المرور</label><input type="password" placeholder="8 أحرف على الأقل"/></div>
+      <div class="field"><label>الاسم الكامل</label><input type="text" id="signup-name" placeholder="الاسم الكامل"/></div>
+      <div class="field"><label>البريد الإلكتروني</label><input type="email" id="signup-email" placeholder="email@example.com"/></div>
+      <div class="field"><label>كلمة المرور</label><input type="password" id="signup-password" placeholder="8 أحرف على الأقل"/></div>
+      <div class="field"><label>رقم الهاتف (اختياري)</label><input type="tel" id="signup-phone" placeholder="05X-XXXXXXX"/></div>
+      <button type="button" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;color:#333;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-bottom:16px;transition:.2s;" onclick="handleGoogleLogin()" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='#fff'">
+        <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        تسجيل بـ Google
+      </button>
+      <div style="text-align:center;color:#999;font-size:13px;margin-bottom:12px;">── أو ──</div>
       <button type="submit" class="btn btn-primary w-full">إنشاء الحساب</button>
     </form>
   </div>

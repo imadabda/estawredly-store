@@ -167,7 +167,7 @@ input,select,textarea{font-family:inherit}
   padding:0 4px;border:2px solid #fff;
   transition:transform .15s
 }
-.menu-btn{display:none;flex-direction:column;gap:5px;padding:8px;border-radius:10px;border:1.5px solid var(--gray2)}
+.menu-btn{display:none;flex-direction:column;gap:5px;padding:8px;border-radius:10px;border:1.5px solid var(--gray2);position:relative;z-index:999999;}
 .menu-btn span{display:block;width:22px;height:2px;background:var(--gray7);border-radius:2px;transition:var(--t)}
 
 /* Nav */

@@ -13,56 +13,8 @@ document.addEventListener('gesturestart', function (e) {
 // ══════════════════════════════════════
 // PRODUCT DATA
 // ══════════════════════════════════════
-const PRODUCTS = {
-  all: [
-    {"id": 1, "name": "ممسحة مسطحة شينيل", "desc": "ممسحة مسطحة 40 سم، رأس ممسحة شينيل قابل للاستبدال، مقبض معدني قابل للتطويل من 73 إلى 130 سم بقطر 19-22 مم.", "cat": "قطع غيار", "code": "GSA001", "img": "prod_flat.jpg", "price": 20, "oldPrice": 26, "badge": "", "stars": 4.6, "reviews": 135},
-    {"id": 2, "name": "رأس ممسحة شينيل بديل", "desc": "الوزن 125 جم، مناسب للموديل GSA001، المقاس: 43.5×13 سم.", "cat": "قطع غيار", "code": "GSR-A001", "img": "prod_flat.jpg", "price": 9, "oldPrice": 12, "badge": "", "stars": 4.7, "reviews": 150},
-    {"id": 3, "name": "ممسحة مسطحة", "desc": "ممسحة مسطحة مقاس 40×10 سم، رأس ممسحة شينيل بديل مقاس 43×13 سم، مقبض معدني قابل للتطويل من 70 إلى 120 سم.", "cat": "مماسح مسطحة", "code": "KA2210", "img": "prod_flat.jpg", "price": 18, "oldPrice": 24, "badge": "new", "stars": 4.8, "reviews": 165},
-    {"id": 4, "name": "رأس ممسحة بديل من الألياف الدقيقة", "desc": "رأس بديل للموديل KA2210، المقاس: 43×13 سم، التغليف: بطاقة ورقية + كيس شفاف (OPP).", "cat": "قطع غيار", "code": "KR2204", "img": "prod_flat.jpg", "price": 7, "oldPrice": 10, "badge": "", "stars": 4.9, "reviews": 180},
-    {"id": 5, "name": "ممسحة من الألياف الدقيقة", "desc": "ممسحة مسطحة 40 سم، رأس ممسحة من الألياف الدقيقة مقاس 44×14 سم، مقبض معدني قابل للتطويل من 73 إلى 125 سم.", "cat": "مماسح مسطحة", "code": "KA2525", "img": "prod_flat.jpg", "price": 20, "oldPrice": 26, "badge": "", "stars": 4.5, "reviews": 195},
-    {"id": 6, "name": "رأس ممسحة بديل", "desc": "المقاس: 44×14 سم؛ رأس ممسحة بديل من الألياف الدقيقة.", "cat": "قطع غيار", "code": "R-KA2525", "img": "prod_flat.jpg", "price": 9, "oldPrice": 12, "badge": "new", "stars": 4.6, "reviews": 210},
-    {"id": 7, "name": "ممسحة من الألياف الدقيقة", "desc": "ممسحة مسطحة 52 سم، رأس ممسحة من الألياف الدقيقة مقاس 54.5×15 سم، مقبض معدني قابل للتطويل من 75 إلى 130 سم.", "cat": "مماسح مسطحة", "code": "KA2519", "img": "prod_flat.jpg", "price": 33, "oldPrice": 43, "badge": "", "stars": 4.7, "reviews": 225},
-    {"id": 8, "name": "ممسحة مسطحة", "desc": "ممسحة مسطحة 38 سم، رأس ممسحة من الألياف الدقيقة مقاس 41.5×12.5 سم، مقبض معدني قابل للتطويل بقطر 19-22 مم من 70 إلى 120 سم، تغليف ببطاقة ورقية.", "cat": "مماسح مسطحة", "code": "KA2208", "img": "prod_flat.jpg", "price": 17, "oldPrice": 23, "badge": "", "stars": 4.8, "reviews": 240},
-    {"id": 9, "name": "رأس ممسحة بديل", "desc": "رأس بديل للموديل KA2208، المقاس: 41.5×12.5 سم، التغليف: بطاقة ورقية + كيس شفاف.", "cat": "قطع غيار", "code": "KR2203", "img": "prod_flat.jpg", "price": 6, "oldPrice": 8, "badge": "new", "stars": 4.9, "reviews": 255},
-    {"id": 10, "name": "ممسحة مسطحة من الألياف الدقيقة", "desc": "طقم ممسحة مسطحة مقاس 41×10.5 سم، رأس بديل من الألياف الدقيقة، مقبض معدني قابل للتطويل من 75 إلى 130 سم بقطر 22/25 مم.", "cat": "مماسح مسطحة", "code": "K19008", "img": "prod_flat.jpg", "price": 26, "oldPrice": 34, "badge": "", "stars": 4.5, "reviews": 270},
-    {"id": 11, "name": "رأس ممسحة بديل من الألياف الدقيقة", "desc": "المقاس: 45×14 سم، رأس ممسحة بديل من الألياف الدقيقة موديل K190008، بتصميم الجيب.", "cat": "قطع غيار", "code": "K19008-R", "img": "prod_flat.jpg", "price": 9, "oldPrice": 12, "badge": "", "stars": 4.6, "reviews": 285},
-    {"id": 12, "name": "ممسحة مسطحة من الألياف الدقيقة", "desc": "ممسحة مسطحة من الألياف الدقيقة، مقاس الرأس: 37×11 سم، رأس بديل واحد بنظام الفيلكرو، مقبض معدني قابل للتطويل من 75 إلى 130 سم بقطر 21.5/25 مم، تغليف ببطاقة ورقية.", "cat": "مماسح مسطحة", "code": "KA2312", "img": "prod_flat.jpg", "price": 23, "oldPrice": 30, "badge": "new", "stars": 4.7, "reviews": 300},
-    {"id": 13, "name": "رأس ممسحة بديل", "desc": "رأس بديل من الألياف الدقيقة للممسحة المسطحة KA2312، بنظام الفيلكرو من الخلف، المقاس: 38×13 سم، التغليف: بطاقة ورقية + كيس بلاستيكي.", "cat": "قطع غيار", "code": "R-KA2312", "img": "prod_flat.jpg", "price": 6, "oldPrice": 8, "badge": "", "stars": 4.8, "reviews": 315},
-    {"id": 14, "name": "ممسحة مسطحة من الألياف الدقيقة", "desc": "ممسحة مسطحة من الألياف الدقيقة، مقاس الرأس: 47×13.2 سم، رأس بديل واحد من الألياف الدقيقة، مقبض معدني قابل للتطويل من 75 إلى 130 سم بقطر 21.5/25 مم، تغليف ببطاقة ورقية.", "cat": "مماسح مسطحة", "code": "KA2315", "img": "prod_flat.jpg", "price": 29, "oldPrice": 38, "badge": "", "stars": 4.9, "reviews": 330},
-    {"id": 15, "name": "رأس ممسحة بديل من الألياف الدقيقة 48 سم", "desc": "رأس ممسحة بديل من الألياف الدقيقة، المقاس: 48×15.5 سم، طول الخيوط الحلقية 3 سم، بتصميم الجيب، التغليف: بطاقة ورقية + كيس شفاف، 24 قطعة/كرتون.", "cat": "قطع غيار", "code": "R-KA2315", "img": "prod_flat.jpg", "price": 11, "oldPrice": 15, "badge": "new", "stars": 4.5, "reviews": 345},
-    {"id": 16, "name": "ممسحة قطنية", "desc": "ممسحة مسطحة 40 سم، رأس ممسحة قطنية بديلة مقاس 43×13 سم، مقبض معدني قابل للتطويل من 73 إلى 125 سم، رأس دوّار بزاوية 360 درجة.", "cat": "مماسح قطنية", "code": "KA2526", "img": "prod_cotton.jpg", "price": 22, "oldPrice": 29, "badge": "", "stars": 4.6, "reviews": 360},
-    {"id": 17, "name": "رأس ممسحة بديل من القطن المخلوط", "desc": "المقاس: 43×13 سم؛ طول الخيوط 3.5 سم، رأس ممسحة بديل من القطن المخلوط.", "cat": "مماسح قطنية", "code": "R-KA2526", "img": "prod_flat.jpg", "price": 10, "oldPrice": 13, "badge": "", "stars": 4.7, "reviews": 375},
-    {"id": 18, "name": "ممسحة قطنية 52 سم", "desc": "ممسحة مسطحة 52 سم، رأس ممسحة قطنية بديلة مقاس 54×15 سم، مقبض معدني قابل للتطويل من 74 إلى 130 سم، رأس دوّار بزاوية 360 درجة.", "cat": "مماسح قطنية", "code": "KA2523", "img": "prod_cotton.jpg", "price": 32, "oldPrice": 42, "badge": "new", "stars": 4.8, "reviews": 390},
-    {"id": 19, "name": "ممسحة قطنية احترافية", "desc": "ممسحة مسطحة 60 سم، رأس ممسحة بديل من القطن المخلوط، مقبض معدني طول 135 سم (يشمل المشبك ومقبض اليد).", "cat": "مماسح قطنية", "code": "GSA011", "img": "prod_cotton.jpg", "price": 33, "oldPrice": 43, "badge": "", "stars": 4.9, "reviews": 405},
-    {"id": 20, "name": "رأس ممسحة قطنية بديل", "desc": "رأس ممسحة بديل من القطن المخلوط للموديل GSA011؛ المقاس: 60×16.5 سم.", "cat": "مماسح قطنية", "code": "GSR-A011", "img": "prod_cotton.jpg", "price": 14, "oldPrice": 19, "badge": "", "stars": 4.5, "reviews": 420},
-    {"id": 21, "name": "ممسحة مسطحة من الألياف الدقيقة", "desc": "ممسحة مسطحة من الألياف الدقيقة، مقاس الرأس: 54×12 سم، رأس بديل واحد بنظام الفيلكرو، مقبض معدني قابل للتطويل من 74 إلى 130 سم بقطر 21.5/25 مم، تغليف ببطاقة ورقية.", "cat": "مماسح مسطحة", "code": "KA2524", "img": "prod_flat.jpg", "price": 30, "oldPrice": 39, "badge": "new", "stars": 4.6, "reviews": 435},
-    {"id": 22, "name": "رأس ممسحة بديل", "desc": "رأس بديل من الألياف الدقيقة للممسحة المسطحة KA2524، بنظام الفيلكرو من الخلف، المقاس: 57×14.5 سم، التغليف: بطاقة ورقية + كيس بلاستيكي.", "cat": "قطع غيار", "code": "R-KA2524", "img": "prod_flat.jpg", "price": 10, "oldPrice": 13, "badge": "", "stars": 4.7, "reviews": 450},
-    {"id": 23, "name": "ممسحة ملتوية (تويست)", "desc": "رأس ممسحة من الألياف الدقيقة، مقبض معدني طول 120 سم، بخاصية القفل الذاتي.", "cat": "مماسح مسطحة", "code": "GSA010", "img": "prod_flat.jpg", "price": 16, "oldPrice": 21, "badge": "", "stars": 4.8, "reviews": 465},
-    {"id": 24, "name": "ممسحة مائية قطنية", "desc": "رأس قطن مخلوط وزن 200 جم، مقبض معدني طول 130 سم، قطر 21.5 مم مع رأس بربطة حلزونية إيطالية.", "cat": "مماسح قطنية", "code": "K19022", "img": "prod_cotton.jpg", "price": 11, "oldPrice": 15, "badge": "new", "stars": 4.9, "reviews": 480},
-    {"id": 25, "name": "ممسحة مائية من الألياف الدقيقة", "desc": "رأس من الألياف الدقيقة وزن 160 جم، مقبض معدني طول 130 سم، قطر 21.5 مم مع رأس بربطة حلزونية إيطالية.", "cat": "مماسح مسطحة", "code": "K19023", "img": "prod_flat.jpg", "price": 12, "oldPrice": 16, "badge": "", "stars": 4.5, "reviews": 495},
-    {"id": 26, "name": "ممسحة ملتوية (تويست)", "desc": "رأس قطن مخلوط وزن 300 جم، مقبض معدني طول 130 سم، بخاصية القفل الذاتي.", "cat": "مماسح مسطحة", "code": "K19024", "img": "prod_flat.jpg", "price": 20, "oldPrice": 26, "badge": "", "stars": 4.6, "reviews": 510},
-    {"id": 27, "name": "ممسحة ملتوية (تويست)", "desc": "رأس ممسحة ملتوية من الألياف الدقيقة، مقبض معدني طول 130 سم، بخاصية القفل الذاتي.", "cat": "مماسح مسطحة", "code": "K19025", "img": "prod_flat.jpg", "price": 20, "oldPrice": 26, "badge": "new", "stars": 4.7, "reviews": 525},
-    {"id": 28, "name": "ممسحة قطنية", "desc": "رأس ممسحة من القطن المخلوط وزن 450 جم، طول الخيوط 36 سم، مقبض معدني طول 130 سم بقطر 22 مم، حامل ممسحة بلاستيكي، التغليف: كيس شفاف + بطاقة ورقية.", "cat": "مماسح قطنية", "code": "GSA031", "img": "prod_cotton.jpg", "price": 26, "oldPrice": 34, "badge": "", "stars": 4.8, "reviews": 540},
-    {"id": 29, "name": "ممسحة PVA السحرية", "desc": "رأس إسفنج PVA مقاس 27 سم قابل للاستبدال، مقبض من الفولاذ المقاوم للصدأ قابل للتطويل من 76 إلى 107 سم.", "cat": "مماسح مسطحة", "code": "GSA004", "img": "prod_flat.jpg", "price": 23, "oldPrice": 30, "badge": "", "stars": 4.9, "reviews": 555},
-
-    {"id": 11, "name": "Microfiber Mop refill", "desc": "K190008配布头", "cat": "قطع غيار", "code": "K19008-R", "img": "prod_micro_refill.jpg", "price": 11, "oldPrice": 14, "badge": "hot", "stars": 4.8, "reviews": 249},
-    {"id": 12, "name": "Microfiber Flat Mop", "desc": "粘扣式超细纤维拖把", "cat": "مماسح مايكروفايبر", "code": "KA2312", "img": "prod_micro_flat.jpg", "price": 30, "oldPrice": 39, "badge": "hot", "stars": 4.6, "reviews": 54},
-    {"id": 13, "name": "MOP REFILL", "desc": "拖把配布", "cat": "قطع غيار", "code": "R-KA2312", "img": "prod_cotton_refill.jpg", "price": 7, "oldPrice": 9, "badge": "new", "stars": 4.9, "reviews": 83},
-    {"id": 14, "name": "Microfiber Flat Mop", "desc": "超细纤维拖把", "cat": "مماسح مايكروفايبر", "code": "KA2315", "img": "prod_micro_flat.jpg", "price": 37, "oldPrice": 48, "badge": "new", "stars": 4.8, "reviews": 98},
-    {"id": 15, "name": "48CM Microfiber mop refill", "desc": "48CM圆头拖把布", "cat": "قطع غيار", "code": "R-KA2315", "img": "prod_micro_refill.jpg", "price": 13, "oldPrice": 16, "badge": "", "stars": 4.6, "reviews": 162},
-    {"id": 16, "name": "Cotton Mop", "desc": "棉纱平拖", "cat": "مماسح قطنية", "code": "KA2526", "img": "prod_cotton_mop.jpg", "price": 29, "oldPrice": 37, "badge": "new", "stars": 4.5, "reviews": 78},
-    {"id": 17, "name": "mix cotton Mop refill", "desc": "涤棉纱替换头", "cat": "قطع غيار", "code": "R-KA2526", "img": "prod_cotton_refill.jpg", "price": 13, "oldPrice": 16, "badge": "", "stars": 4.9, "reviews": 95},
-    {"id": 18, "name": "Cotton Mop 52cm", "desc": "52cm棉纱平拖", "cat": "مماسح قطنية", "code": "KA2523", "img": "prod_cotton_mop.jpg", "price": 41, "oldPrice": 53, "badge": "new", "stars": 4.8, "reviews": 204},
-    {"id": 19, "name": "Professional Cotton Mop", "desc": "60CM商务平拖 GSA011", "cat": "مماسح قطنية", "code": "GSA011", "img": "prod_cotton_mop.jpg", "price": 42, "oldPrice": 54, "badge": "hot", "stars": 4.5, "reviews": 211},
-    {"id": 20, "name": "Cotton Mop refill", "desc": "60CM商务型棉纱平拖", "cat": "قطع غيار", "code": "GSR-A011", "img": "prod_cotton_refill.jpg", "price": 17, "oldPrice": 22, "badge": "hot", "stars": 4.7, "reviews": 69},
-  ],
-  flash: [
-    {"id": 1, "name": "ممسحة مسطحة شينيل", "desc": "ممسحة مسطحة 40 سم، رأس ممسحة شينيل قابل للاستبدال، مقبض معدني قابل للتطويل من 73 إلى 130 سم بقطر 19-22 مم.", "cat": "قطع غيار", "code": "GSA001", "img": "prod_flat.jpg", "price": 20, "oldPrice": 26, "badge": "sale", "stars": 4.6, "reviews": 135},
-    {"id": 2, "name": "رأس ممسحة شينيل بديل", "desc": "الوزن 125 جم، مناسب للموديل GSA001، المقاس: 43.5×13 سم.", "cat": "قطع غيار", "code": "GSR-A001", "img": "prod_flat.jpg", "price": 9, "oldPrice": 12, "badge": "sale", "stars": 4.7, "reviews": 150},
-    {"id": 3, "name": "ممسحة مسطحة", "desc": "ممسحة مسطحة مقاس 40×10 سم، رأس ممسحة شينيل بديل مقاس 43×13 سم، مقبض معدني قابل للتطويل من 70 إلى 120 سم.", "cat": "مماسح مسطحة", "code": "KA2210", "img": "prod_flat.jpg", "price": 18, "oldPrice": 24, "badge": "sale", "stars": 4.8, "reviews": 165},
-    {"id": 4, "name": "رأس ممسحة بديل من الألياف الدقيقة", "desc": "رأس بديل للموديل KA2210، المقاس: 43×13 سم، التغليف: بطاقة ورقية + كيس شفاف (OPP).", "cat": "قطع غيار", "code": "KR2204", "img": "prod_flat.jpg", "price": 7, "oldPrice": 10, "badge": "sale", "stars": 4.9, "reviews": 180},
-  ]
-};
+// Products loaded from Store (localStorage + products_db.js)
+let PRODUCTS_LIVE = [];
 
 // ══════════════════════════════════════
 // STATE
@@ -166,7 +118,7 @@ function updateWishUI() {
   const list  = document.getElementById('wish-items-list');
   const empty = document.getElementById('wish-empty');
   if (!list) return;
-  const wishProducts = [...PRODUCTS.all, ...PRODUCTS.new, ...PRODUCTS.flash].filter(p=>state.wishlist.has(p.id));
+  const wishProducts = PRODUCTS_LIVE.filter(p=>state.wishlist.has(p.id));
   if (wishProducts.length===0) {
     empty.style.display='flex'; list.style.display='none';
   } else {
@@ -240,8 +192,7 @@ function renderGrid(containerId, products) {
 // QUICK VIEW
 // ══════════════════════════════════════
 function quickView(id) {
-  const all = [...PRODUCTS.all, ...PRODUCTS.new, ...PRODUCTS.flash];
-  const p = all.find(x=>x.id===id);
+  const p = PRODUCTS_LIVE.find(x=>x.id===id);
   if (!p) return;
   const disc = p.oldPrice ? Math.round((1-p.price/p.oldPrice)*100) : 0;
   document.getElementById('qv-inner').innerHTML = `
@@ -385,8 +336,8 @@ function initSearch() {
   const inp = document.getElementById('search-input');
   if(!btn||!inp) return;
   function doSearch(){
-    const q=inp.value.trim();
-    if(q) { toast(`🔍 جاري البحث عن: "${q}"`, 'info'); }
+    const q = inp.value.trim();
+    if (q) { window.location = `shop.html?q=${encodeURIComponent(q)}`; }
   }
   btn.addEventListener('click', doSearch);
   inp.addEventListener('keypress', e=>{if(e.key==='Enter')doSearch();});
@@ -403,8 +354,8 @@ function initProductTabs() {
       tabs.forEach(t=>t.classList.remove('active'));
       tab.classList.add('active');
       const t = tab.dataset.tab;
-      const filtered = t==='all' ? PRODUCTS.all : PRODUCTS.all.filter(p=>p.tab===t);
-      renderGrid('main-grid', filtered.length ? filtered : PRODUCTS.all);
+      const filtered = t==='all' ? PRODUCTS_LIVE : PRODUCTS_LIVE.filter(p=>p.tab===t);
+      renderGrid('main-grid', filtered.length ? filtered : PRODUCTS_LIVE);
     });
   });
 }
@@ -421,6 +372,26 @@ function initScroll() {
     if(hdr) hdr.style.boxShadow = y>10 ? '0 2px 20px rgba(0,0,0,.1)' : '0 1px 0 var(--gray2)';
   },{passive:true});
 }
+
+// ══════════════════════════════════════
+// AUTH UI UPDATE
+// ══════════════════════════════════════
+function updateAuthUI() {
+  if (typeof Store === 'undefined') return;
+  const user = Store.getCurrentUser();
+  const btnLogin = document.getElementById('btn-login');
+  const btnReg   = document.getElementById('btn-register');
+  const btnUser  = document.getElementById('btn-user-name');
+  if (user) {
+    if (btnLogin) btnLogin.textContent = user.name.split(' ')[0];
+    if (btnReg)   { btnReg.textContent = 'خروج'; btnReg.onclick = (e) => { e.preventDefault(); Store.logout(); updateAuthUI(); toast('تم تسجيل الخروج'); }; }
+    if (btnUser)  btnUser.textContent = user.name;
+  } else {
+    if (btnLogin) { btnLogin.textContent = 'تسجيل دخول'; btnLogin.onclick = null; }
+    if (btnReg)   { btnReg.textContent = 'حساب جديد'; btnReg.onclick = null; }
+  }
+}
+window.updateAuthUI = updateAuthUI;
 
 // ══════════════════════════════════════
 // AUTH MODAL
@@ -461,11 +432,33 @@ function initAuth() {
     tabIn.classList.remove('active'); tabUp.classList.add('active');
     authLogin.style.display='none'; authSignup.style.display='block';
   });
-  document.getElementById('login-form')?.addEventListener('submit',e=>{
-    e.preventDefault(); toast('🎉 تم تسجيل الدخول بنجاح!'); closeModal('auth');
+  document.getElementById('login-form')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const email    = document.getElementById('login-email')?.value?.trim();
+    const password = document.getElementById('login-password')?.value;
+    if (!email || !password) { toast('يرجى ملء جميع الحقول', 'error'); return; }
+    if (typeof Store === 'undefined') { toast('خطأ في النظام', 'error'); return; }
+    const result = Store.loginUser(email, password);
+    if (result.error) { toast('❌ ' + result.error, 'error'); return; }
+    toast('🎉 أهلاً ' + result.user.name + '!');
+    closeModal('auth');
+    updateAuthUI();
   });
-  document.getElementById('signup-form')?.addEventListener('submit',e=>{
-    e.preventDefault(); toast('🎉 تم إنشاء حساب جديد! مرحبًا بك 🎊'); closeModal('auth');
+  document.getElementById('signup-form')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const name     = document.getElementById('signup-name')?.value?.trim();
+    const email    = document.getElementById('signup-email')?.value?.trim();
+    const password = document.getElementById('signup-password')?.value;
+    const phone    = document.getElementById('signup-phone')?.value?.trim();
+    if (!name || !email || !password) { toast('يرجى ملء جميع الحقول', 'error'); return; }
+    if (password.length < 6) { toast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error'); return; }
+    if (typeof Store === 'undefined') { toast('خطأ في النظام', 'error'); return; }
+    const result = Store.registerUser({ name, email, password, phone });
+    if (result.error) { toast('❌ ' + result.error, 'error'); return; }
+    Store.loginUser(email, password);
+    toast('🎉 تم إنشاء حسابك بنجاح! مرحبًا ' + name + ' 🎊');
+    closeModal('auth');
+    updateAuthUI();
   });
 }
 
@@ -522,10 +515,15 @@ document.addEventListener('keydown',e=>{
 // INIT
 // ══════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
-  // Render products
-  renderGrid('flash-grid', PRODUCTS.flash);
-  renderGrid('main-grid',  PRODUCTS.all);
-  renderGrid('new-grid',   PRODUCTS.new);
+  // Load products from Store
+  if (typeof Store !== 'undefined') {
+    PRODUCTS_LIVE = Store.getProducts();
+  }
+  const flashProds = PRODUCTS_LIVE.filter(p => p.badge === 'sale' || p.badge === 'hot').slice(0, 8);
+  const newProds   = PRODUCTS_LIVE.filter(p => p.badge === 'new').slice(0, 8);
+  renderGrid('flash-grid', flashProds.length ? flashProds : PRODUCTS_LIVE.slice(0, 8));
+  renderGrid('main-grid',  PRODUCTS_LIVE.slice(0, 12));
+  renderGrid('new-grid',   newProds.length ? newProds : PRODUCTS_LIVE.slice(12, 20));
 
   // Update UI from stored state
   updateCartUI();
@@ -557,4 +555,74 @@ document.addEventListener('DOMContentLoaded',()=>{
   // QV
   document.getElementById('qv-close')?.addEventListener('click',()=>closeModal('qv'));
   document.getElementById('qv-mask')?.addEventListener('click', ()=>closeModal('qv'));
+
+  // Checkout handler
+  document.getElementById('checkout-btn')?.addEventListener('click', () => {
+    if (typeof Store === 'undefined' || !Store.isLoggedIn()) {
+      toast('يرجى تسجيل الدخول لإتمام الطلب', 'error');
+      window.openAuthModal && window.openAuthModal('login');
+      return;
+    }
+    const cart = state.cart;
+    if (!cart.length) { toast('السلة فارغة', 'error'); return; }
+    const user = Store.getCurrentUser();
+    const order = Store.addOrder({
+      userId: user.id,
+      userName: user.name,
+      userEmail: user.email,
+      userPhone: user.phone || '',
+      items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty, img: i.img })),
+      total: state.cartTotal(),
+      address: '',
+      notes: '',
+    });
+    state.cart = [];
+    state.saveCart();
+    updateCartUI();
+    closeDrawer('cart');
+    toast('✅ تم استلام طلبك رقم ' + order.id + '! سنتواصل معك قريباً');
+  });
+
+  // Mobile Menu Toggle Fix
+  document.getElementById('menu-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('main-nav')?.classList.toggle('open');
+  });
+
+  updateAuthUI();
 });
+
+// Google Login handler
+window.handleGoogleLogin = function() {
+  if (typeof google === 'undefined' || !google.accounts) {
+    const demoUser = {
+      name: 'مستخدم جوجل',
+      email: 'google-user@gmail.com',
+      picture: null,
+    };
+    if (typeof Store !== 'undefined') Store.loginWithGoogle(demoUser);
+    toast('🎉 تم تسجيل الدخول بـ Google!');
+    closeModal('auth');
+    updateAuthUI();
+    return;
+  }
+  google.accounts.id.initialize({
+    client_id: 'YOUR_GOOGLE_CLIENT_ID',
+    callback: (response) => {
+      try {
+        const payload = JSON.parse(atob(response.credential.split('.')[1]));
+        if (typeof Store !== 'undefined') Store.loginWithGoogle({
+          name: payload.name,
+          email: payload.email,
+          picture: payload.picture,
+        });
+        toast('🎉 أهلاً ' + payload.name + '!');
+        closeModal('auth');
+        updateAuthUI();
+      } catch (err) {
+        toast('❌ فشل تسجيل الدخول بجوجل', 'error');
+      }
+    },
+  });
+  google.accounts.id.prompt();
+};

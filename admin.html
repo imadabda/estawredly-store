@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
+<script src="products_db.js?v=12"></script>
+<script src="store.js?v=12"></script>
 <style>
 /* ══════════════════════════════════════
    ADMIN DASHBOARD – إستوردلي
@@ -870,72 +872,34 @@ tr:last-child td{border-bottom:none}
    ADMIN DASHBOARD LOGIC
    ══════════════════════════════════════ */
 
-// Load product data from main store
-const storeCart = JSON.parse(localStorage.getItem('store_cart')||'[]');
-
-// Admin-managed products (start with store products, extend with custom)
-const ADMIN_PRODUCTS_KEY = 'admin_products';
-let adminProducts = JSON.parse(localStorage.getItem(ADMIN_PRODUCTS_KEY) || 'null') || [
-  {id:1,  name:'طقم كنب زاوية إيطالي فخم',      cat:'أثاث منزلي',    img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80', price:850, oldPrice:1200, badge:'hot', stars:4.9, reviews:142, active:true},
-  {id:2,  name:'شاشة Samsung OLED 65"',           cat:'إلكترونيات',    img:'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&q=80',price:1299,oldPrice:1599,badge:'best',stars:4.9, reviews:528, active:true},
-  {id:3,  name:'حذاء Nike Air Max 270',            cat:'أحذية رياضية',  img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80', price:110, oldPrice:145, badge:'sale',stars:4.8, reviews:310, active:true},
-  {id:4,  name:'حقيبة كتف شانيل جلد طبيعي',      cat:'حقائب فاخرة',   img:'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=400&q=80',price:240, oldPrice:320, badge:'hot', stars:4.8, reviews:167, active:true},
-  {id:5,  name:'طاولة طعام خشب زان 6 كراسي',      cat:'أثاث منزلي',    img:'https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=400&q=80',price:450, oldPrice:600, badge:'sale',stars:4.7, reviews:84,  active:true},
-  {id:6,  name:'ساعة Apple Watch Ultra 2',         cat:'إلكترونيات',    img:'https://images.unsplash.com/photo-1434493789847-2f02bca0f008?w=400&q=80',price:799, oldPrice:null,badge:'new', stars:4.9, reviews:445, active:true},
-  {id:7,  name:'فستان سهرة تركي مطرز',            cat:'ملابس نسائية',  img:'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&q=80',price:120, oldPrice:180, badge:'sale',stars:4.6, reviews:290, active:true},
-  {id:8,  name:'عجانة كينوود 1200 واط',            cat:'أجهزة مطبخ',    img:'https://images.unsplash.com/photo-1594385208974-2e75f8d7bb48?w=400&q=80',price:280, oldPrice:350, badge:'hot', stars:4.8, reviews:112, active:true},
-  {id:9,  name:'عطر ديور سوفاج 100مل',            cat:'عطور رجالية',   img:'https://images.unsplash.com/photo-1523293115678-d290274f83b2?w=400&q=80',price:135, oldPrice:160, badge:'best',stars:4.9, reviews:678, active:true},
-  {id:10, name:'سماعات Sony WH-1000XM5',           cat:'إلكترونيات',    img:'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&q=80',price:348, oldPrice:399, badge:'sale',stars:4.8, reviews:812, active:true},
-  {id:11, name:'طقم ذهب عيار 21 إماراتي',         cat:'مجوهرات وساعات',img:'https://images.unsplash.com/photo-1605100804763-247f679f220a?w=400&q=80',price:1250,oldPrice:null,badge:'new', stars:5.0, reviews:43,  active:false},
-  {id:12, name:'جاكيت جلد طبيعي Massimo',          cat:'ملابس رجالية',  img:'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80',price:195, oldPrice:250, badge:'sale',stars:4.7, reviews:188, active:true},
-];
-
-const ORDERS = [
-  {id:'#8821', customer:'أحمد محمود',  city:'رام الله',  items:3, total:385,  status:'delivered', date:'2024-01-15'},
-  {id:'#8820', customer:'سارة علي',    city:'نابلس',     items:1, total:1299, status:'shipped',   date:'2024-01-15'},
-  {id:'#8819', customer:'محمد حسين',   city:'غزة',       items:2, total:230,  status:'pending',   date:'2024-01-14'},
-  {id:'#8818', customer:'فاطمة خالد',  city:'الخليل',    items:5, total:740,  status:'delivered', date:'2024-01-14'},
-  {id:'#8817', customer:'يوسف نور',    city:'جنين',      items:1, total:799,  status:'shipped',   date:'2024-01-13'},
-  {id:'#8816', customer:'رانيا سالم',  city:'طولكرم',    items:2, total:480,  status:'cancelled', date:'2024-01-13'},
-  {id:'#8815', customer:'خالد عمر',    city:'قلقيلية',   items:4, total:890,  status:'delivered', date:'2024-01-12'},
-  {id:'#8814', customer:'نور الحسن',   city:'أريحا',     items:1, total:135,  status:'pending',   date:'2024-01-12'},
-];
-
-const CUSTOMERS = [
-  {name:'أحمد محمود',  email:'ahmed@mail.com',  city:'رام الله', orders:14, spent:4820, date:'2023-06-12'},
-  {name:'سارة علي',    email:'sara@mail.com',   city:'نابلس',    orders:8,  spent:6190, date:'2023-08-20'},
-  {name:'محمد حسين',   email:'mh@mail.com',     city:'غزة',      orders:22, spent:9340, date:'2023-03-15'},
-  {name:'فاطمة خالد',  email:'fk@mail.com',     city:'الخليل',   orders:5,  spent:1230, date:'2024-01-02'},
-  {name:'يوسف نور',    email:'yn@mail.com',     city:'جنين',     orders:3,  spent:2397, date:'2023-11-08'},
-  {name:'رانيا سالم',  email:'rs@mail.com',     city:'طولكرم',   orders:11, spent:3150, date:'2023-07-30'},
-];
+// ── مصدر البيانات: Store (localStorage مشترك مع الموقع)
+let adminProducts = (typeof Store !== 'undefined') ? Store.getProducts() : [];
+function getAdminOrders() { return (typeof Store !== 'undefined') ? Store.getOrders() : []; }
+function getAdminUsers() { return (typeof Store !== 'undefined') ? Store.getUsers() : []; }
 
 const NOTIFS = [
-  {icon:'🛒',color:'rgba(59,130,246,.15)', title:'طلبية جديدة #8821', sub:'أحمد محمود أضاف 3 منتجات بقيمة ₪385 — منذ 10 دقائق'},
-  {icon:'⚠️',color:'rgba(245,158,11,.15)',  title:'مخزون منخفض: سماعات Sony', sub:'تبقى 2 قطع فقط — منذ ساعة'},
-  {icon:'⭐',color:'rgba(16,185,129,.15)', title:'تقييم جديد ★★★★★', sub:'سارة علي: "منتج رائع جداً" — منذ 3 ساعات'},
+  {icon:'🛒',color:'rgba(59,130,246,.15)', title:'مرحباً في لوحة الإدارة', sub:'البيانات متزامنة مع الموقع مباشرةً'},
+  {icon:'📦',color:'rgba(16,185,129,.15)', title:'206 منتج في المتجر', sub:'جميع المنتجات محملة من قاعدة البيانات'},
 ];
 
 const HERO_SLIDES = [
-  {title:'كل ما تحتاجه في مكان واحد', sub:'تشكيلة الصيف 2024', img:'hero_fashion.jpg'},
-  {title:'إلكترونيات بضمان كامل', sub:'أحدث التقنية', img:'hero_electronics.jpg'},
-  {title:'موضة راقية بأسعار رائعة', sub:'أناقة ورقي', img:'hero_luxury.jpg'},
+  {title:'كل ما تحتاجه في مكان واحد', sub:'تشكيلة 2025', img:'hero_cleaning1.jpg'},
+  {title:'مماسح باحترافية عالية', sub:'أفضل المنتجات', img:'hero_cleaning2.jpg'},
+  {title:'جودة وسعر لا يُنافَسان', sub:'توفير حقيقي', img:'hero_cleaning3.jpg'},
 ];
 
 const CAT_DATA = [
-  {name:'إلكترونيات', icon:'💻', count:18, sales:156},
-  {name:'ملابس نسائية', icon:'👗', count:34, sales:89},
-  {name:'ملابس رجالية', icon:'👔', count:28, sales:67},
-  {name:'أحذية رياضية', icon:'👟', count:22, sales:134},
-  {name:'حقائب فاخرة', icon:'👜', count:15, sales:43},
-  {name:'مجوهرات وساعات', icon:'💎', count:12, sales:31},
-  {name:'أثاث منزلي', icon:'🛋️', count:9, sales:28},
-  {name:'أجهزة مطبخ', icon:'🍳', count:16, sales:55},
+  {name:'مماسح مسطحة', icon:'🧹', count:0, sales:0},
+  {name:'مماسح قطنية', icon:'🪣', count:0, sales:0},
+  {name:'مماسح مايكروفايبر', icon:'✨', count:0, sales:0},
+  {name:'قطع غيار', icon:'🔧', count:0, sales:0},
 ];
 
 let editingId = null;
 
-function saveAdminProducts() { localStorage.setItem(ADMIN_PRODUCTS_KEY, JSON.stringify(adminProducts)); }
+function saveAdminProducts() {
+  if (typeof Store !== 'undefined') Store.saveProducts(adminProducts);
+}
 
 /* ── Page Navigation ── */
 function showPage(id, el) {
@@ -951,7 +915,7 @@ function showPage(id, el) {
   }
   // Lazy render
   if (id === 'products') renderProducts();
-  if (id === 'orders')   renderOrders(ORDERS);
+  if (id === 'orders')   renderOrders((typeof Store !== 'undefined') ? Store.getOrders() : ORDERS);
   if (id === 'customers') renderCustomers();
   if (id === 'media')    renderMedia();
   if (id === 'hero')     renderHeroEditor();
@@ -962,12 +926,18 @@ function showPage(id, el) {
 
 /* ── Stats ── */
 function updateStats() {
-  const rev = adminProducts.reduce((s,p) => s + p.price * (p.reviews * 0.12), 0);
-  document.getElementById('stat-revenue').textContent = '₪' + Math.round(rev).toLocaleString();
-  document.getElementById('stat-orders').textContent = ORDERS.length + 147;
+  // Reload from Store
+  if (typeof Store !== 'undefined') adminProducts = Store.getProducts();
+  const storeOrders = (typeof Store !== 'undefined') ? Store.getOrders() : ORDERS;
+  const rev = storeOrders.filter(o=>o.status!=='cancelled').reduce((s,o)=>s+(o.total||0),0);
+  document.getElementById('stat-revenue').textContent = '₪' + rev.toLocaleString('ar-SA');
+  document.getElementById('stat-orders').textContent = storeOrders.length;
   document.getElementById('stat-products').textContent = adminProducts.length;
-  document.getElementById('products-count').textContent = adminProducts.length;
-  document.getElementById('products-subtitle').textContent = `${adminProducts.length} منتج إجمالاً، ${adminProducts.filter(p=>p.active).length} منشور`;
+  document.getElementById('stat-pending') && (document.getElementById('stat-pending').textContent = storeOrders.filter(o=>o.status==='pending').length);
+  const pcEl = document.getElementById('products-count');
+  if(pcEl) pcEl.textContent = adminProducts.length;
+  const psEl = document.getElementById('products-subtitle');
+  if(psEl) psEl.textContent = `${adminProducts.length} منتج إجمالاً، ${adminProducts.filter(p=>p.active!==false).length} منشور`;
 }
 
 /* ── Revenue chart ── */
@@ -992,68 +962,91 @@ function renderBigChart() {
 
 /* ── Recent Orders ── */
 function renderRecentOrders() {
-  const statusMap = {pending:'قيد الانتظار',shipped:'تم الشحن',delivered:'تم التسليم',cancelled:'ملغي'};
+  const statusMap = {pending:'قيد الانتظار',processing:'جاري المعالجة',shipped:'تم الشحن',delivered:'تم التسليم',cancelled:'ملغي'};
   const body = document.getElementById('recent-orders-body');
   if (!body) return;
-  body.innerHTML = ORDERS.slice(0,5).map(o=>`
+  const orders = (typeof Store !== 'undefined') ? Store.getOrders() : [];
+  if (!orders.length) { body.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:32px">لا توجد طلبيات بعد</td></tr>`; return; }
+  body.innerHTML = orders.slice(0,5).map(o => {
+    const name = o.userName || o.customer || '-';
+    const itemsCount = Array.isArray(o.items) ? o.items.length : (o.items || 0);
+    return `
     <tr>
       <td><span class="order-id">${o.id}</span></td>
-      <td><div class="order-customer"><div class="oc-av">${o.customer[0]}</div>${o.customer}</div></td>
-      <td>${o.items} منتج</td>
-      <td style="font-weight:800;color:#fff">₪${o.total}</td>
-      <td><span class="status-badge status-${o.status}">${statusMap[o.status]}</span></td>
-      <td style="color:var(--text3)">${o.date}</td>
-    </tr>
-  `).join('');
+      <td><div class="order-customer"><div class="oc-av">${name[0]||'?'}</div>${name}</div></td>
+      <td>${itemsCount} منتج</td>
+      <td style="font-weight:800;color:#fff">₪${(o.total||0).toLocaleString()}</td>
+      <td><span class="status-badge status-${o.status}">${statusMap[o.status]||o.status}</span></td>
+      <td style="color:var(--text3)">${new Date(o.date).toLocaleDateString('ar-SA')}</td>
+    </tr>`;
+  }).join('');
 }
 
 function renderOrders(list) {
-  const statusMap = {pending:'قيد الانتظار',shipped:'تم الشحن',delivered:'تم التسليم',cancelled:'ملغي'};
+  const statusMap = {pending:'قيد الانتظار',processing:'جاري المعالجة',shipped:'تم الشحن',delivered:'تم التسليم',cancelled:'ملغي'};
   const body = document.getElementById('all-orders-body');
   if (!body) return;
-  body.innerHTML = list.map(o=>`
+  if (!list || !list.length) { body.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:40px">لا توجد طلبيات</td></tr>`; return; }
+  body.innerHTML = list.map(o => {
+    const name = o.userName || o.customer || '-';
+    const itemsCount = Array.isArray(o.items) ? o.items.length : (o.items || 0);
+    return `
     <tr>
       <td><span class="order-id">${o.id}</span></td>
-      <td><div class="order-customer"><div class="oc-av">${o.customer[0]}</div>${o.customer} <small style="color:var(--text3)">${o.city}</small></div></td>
-      <td>${o.items} منتج</td>
-      <td style="font-weight:800;color:#fff">₪${o.total}</td>
-      <td><span class="status-badge status-${o.status}">${statusMap[o.status]}</span></td>
-      <td style="color:var(--text3)">${o.date}</td>
+      <td><div class="order-customer"><div class="oc-av">${name[0]||'?'}</div>${name}</div></td>
+      <td>${itemsCount} منتج</td>
+      <td style="font-weight:800;color:#fff">₪${(o.total||0).toLocaleString()}</td>
+      <td><span class="status-badge status-${o.status}">${statusMap[o.status]||o.status}</span></td>
+      <td style="color:var(--text3)">${new Date(o.date).toLocaleDateString('ar-SA')}</td>
       <td>
-        <button onclick="changeOrderStatus('${o.id}')" style="font-size:12px;color:var(--p);font-weight:700;cursor:pointer">تعديل الحالة</button>
-        <button onclick="showToast('📄 طباعة فاتورة ${o.id}')" style="font-size:12px;color:var(--text3);font-weight:600;cursor:pointer;margin-right:8px">فاتورة</button>
+        <select onchange="changeOrderStatus('${o.id}',this.value)" style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-family:inherit;font-size:12px">
+          ${['pending','processing','shipped','delivered','cancelled'].map(s=>`<option value="${s}" ${o.status===s?'selected':''}>${statusMap[s]||s}</option>`).join('')}
+        </select>
       </td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 }
 
 function filterOrders(status) {
-  renderOrders(status ? ORDERS.filter(o=>o.status===status) : ORDERS);
+  const orders = (typeof Store !== 'undefined') ? Store.getOrders() : [];
+  renderOrders(status ? orders.filter(o=>o.status===status) : orders);
 }
 
-function changeOrderStatus(id) {
-  const statuses = ['pending','shipped','delivered','cancelled'];
-  const names = {pending:'قيد الانتظار',shipped:'تم الشحن',delivered:'تم التسليم',cancelled:'ملغي'};
-  const s = statuses[Math.floor(Math.random()*3)];
-  showToast(`🔄 طلبية ${id} → ${names[s]}`);
+function changeOrderStatus(id, newStatus) {
+  if (typeof Store !== 'undefined') {
+    Store.updateOrderStatus(id, newStatus);
+    showToast('✅ تم تحديث حالة الطلبية');
+    updateStats();
+    renderRecentOrders();
+  }
 }
+
 
 /* ── Customers ── */
 function renderCustomers() {
   const body = document.getElementById('customers-body');
-  if (!body || body.dataset.rendered) return;
-  body.innerHTML = CUSTOMERS.map(c=>`
+  if (!body) return;
+  const users = (typeof Store !== 'undefined') ? Store.getUsers().filter(u=>u.role!=='admin') : [];
+  if (!users.length) { body.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:40px">لا يوجد عملاء مسجلون بعد</td></tr>`; return; }
+  const orders = (typeof Store !== 'undefined') ? Store.getOrders() : [];
+  body.innerHTML = users.map(c => {
+    const userOrders = orders.filter(o => o.userId === c.id);
+    const spent = userOrders.reduce((s,o) => s+(o.total||0), 0);
+    return `
     <tr>
       <td><div class="order-customer"><div class="oc-av" style="background:linear-gradient(135deg,#7c3aed,#3b82f6)">${c.name[0]}</div>${c.name}</div></td>
       <td style="color:var(--text3)">${c.email}</td>
-      <td>${c.city}</td>
-      <td style="font-weight:700">${c.orders}</td>
-      <td style="font-weight:800;color:#fff">₪${c.spent.toLocaleString()}</td>
-      <td style="color:var(--text3)">${c.date}</td>
-    </tr>
-  `).join('');
-  body.dataset.rendered='1';
+      <td>${c.provider === 'google' ? '🔵 Google' : '📧 إيميل'}</td>
+      <td style="font-weight:700">${userOrders.length}</td>
+      <td style="font-weight:800;color:#fff">₪${spent.toLocaleString()}</td>
+      <td style="color:var(--text3)">${new Date(c.createdAt).toLocaleDateString('ar-SA')}</td>
+    </tr>`;
+  }).join('');
+  // Update customers count
+  const el = document.querySelector('#page-customers .page-sub');
+  if (el) el.textContent = `${users.length} عميل مسجل`;
 }
+
 
 /* ── Products ── */
 function renderProducts(list) {
@@ -1365,6 +1358,67 @@ setInterval(updateClock, 1000);
 // Close modal on outside click
 document.getElementById('product-modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
+});
+
+// ══ REAL DATA BINDING ══
+function loadAdminProducts() {
+  if (typeof Store === 'undefined') return;
+  const products = Store.getProducts();
+  // Update stats
+  document.getElementById('stat-products') && (document.getElementById('stat-products').textContent = products.length);
+  const orders = Store.getOrders();
+  document.getElementById('stat-orders') && (document.getElementById('stat-orders').textContent = orders.length);
+  document.getElementById('stat-pending') && (document.getElementById('stat-pending').textContent = orders.filter(o=>o.status==='pending').length);
+  const revenue = orders.filter(o=>o.status!=='cancelled').reduce((s,o)=>s+(o.total||0),0);
+  document.getElementById('stat-revenue') && (document.getElementById('stat-revenue').textContent = '\u20AA' + revenue.toLocaleString('ar-SA'));
+}
+
+function loadAdminOrders() {
+  if (typeof Store === 'undefined') return;
+  const orders = Store.getOrders();
+  const tbody = document.getElementById('all-orders-body');
+  if (!tbody) return;
+  const statusMap = {pending:'\u23f0 \u0642\u064a\u062f \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631', processing:'\u2699\ufe0f \u0642\u064a\u062f \u0627\u0644\u0645\u0639\u0627\u0644\u062c\u0629', shipped:'\ud83d\ude9a \u062a\u0645 \u0627\u0644\u0634\u062d\u0646', delivered:'\u2705 \u062a\u0645 \u0627\u0644\u062a\u0633\u0644\u064a\u0645', cancelled:'\u274c \u0645\u0644\u063a\u064a'};
+  tbody.innerHTML = orders.slice(0,50).map(o => `
+    <tr>
+      <td style="font-weight:700">${o.id}</td>
+      <td>${o.userName || '-'}</td>
+      <td>${o.items?.length || 0} \u0645\u0646\u062a\u062c</td>
+      <td>\u20AA${(o.total||0).toLocaleString()}</td>
+      <td><span class="status-badge">${statusMap[o.status]||o.status}</span></td>
+      <td>${new Date(o.date).toLocaleDateString('ar-SA')}</td>
+      <td>
+        <select onchange="Store.updateOrderStatus('${o.id}', this.value); loadAdminOrders(); loadAdminProducts();" style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-family:inherit;">
+          ${['pending','processing','shipped','delivered','cancelled'].map(s=>`<option value="${s}" ${o.status===s?'selected':''}>${statusMap[s]||s}</option>`).join('')}
+        </select>
+      </td>
+    </tr>
+  `).join('');
+}
+
+window.editProductAdmin = function(id) {
+  if (typeof Store === 'undefined') return;
+  const p = Store.getProduct(id);
+  if (!p) return;
+  const name = prompt('\u0627\u0633\u0645 \u0627\u0644\u0645\u0646\u062a\u062c:', p.name);
+  if (name === null) return;
+  const price = prompt('\u0627\u0644\u0633\u0639\u0631 (\u20AA):', p.price);
+  if (price === null) return;
+  Store.updateProduct(id, { name, price: parseFloat(price) || p.price });
+  loadAdminProducts();
+  alert('\u2705 \u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0645\u0646\u062a\u062c');
+};
+
+window.deleteProductAdmin = function(id) {
+  if (!confirm('\u0647\u0644 \u0623\u0646\u062a \u0645\u062a\u0623\u0643\u062f \u0645\u0646 \u062d\u0630\u0641 \u0647\u0630\u0627 \u0627\u0644\u0645\u0646\u062a\u062c\u061f')) return;
+  Store.deleteProduct(id);
+  loadAdminProducts();
+};
+
+// Run on load
+document.addEventListener('DOMContentLoaded', () => {
+  loadAdminProducts();
+  loadAdminOrders();
 });
 </script>
 </body>

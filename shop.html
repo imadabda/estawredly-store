@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=11" />
-  <link rel="stylesheet" href="enhancements.css?v=11" />
+  <link rel="stylesheet" href="style.css?v=12" />
+  <link rel="stylesheet" href="enhancements.css?v=12" />
   <style>
     /* Shop-specific styles */
     .shop-hero {
@@ -517,7 +517,9 @@
     </div>
   </div>
 
-  <script src="main.js?v=11"></script>
+  <script src="products_db.js?v=12"></script>
+  <script src="store.js?v=12"></script>
+  <script src="main.js?v=12"></script>
   <script>
     // Shop-specific script
     document.querySelectorAll('.cat-chip').forEach(chip => {
@@ -532,6 +534,66 @@
         document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       });
+    });
+
+    // Load products from Store and handle URL params
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(location.search);
+      const q   = params.get('q')   || '';
+      const cat = params.get('cat') || '';
+      const sale= params.get('sale')|| '';
+
+      let products = [];
+      if (typeof Store !== 'undefined') {
+        products = Store.getProducts();
+      }
+
+      let filtered = products;
+      if (q) {
+        const ql = q.toLowerCase();
+        filtered = products.filter(p =>
+          p.name.toLowerCase().includes(ql) ||
+          (p.desc && p.desc.toLowerCase().includes(ql)) ||
+          (p.cat  && p.cat.toLowerCase().includes(ql))
+        );
+      }
+      if (cat) {
+        const catMap = {
+          flat: ['مسطحة', 'flat'],
+          microfiber: ['مايكرو', 'microfiber'],
+          cotton: ['قطن', 'cotton'],
+          refills: ['غيار', 'refill'],
+        };
+        const terms = catMap[cat] || [cat];
+        filtered = products.filter(p => terms.some(t =>
+          (p.cat || '').toLowerCase().includes(t.toLowerCase()) ||
+          (p.name || '').toLowerCase().includes(t.toLowerCase())
+        ));
+      }
+      if (sale) {
+        filtered = products.filter(p => p.badge === 'sale' || p.badge === 'hot');
+      }
+
+      const grid = document.getElementById('products-grid');
+      if (grid && typeof makeCard !== 'undefined') {
+        if (filtered.length) {
+          grid.innerHTML = filtered.slice(0, 48).map(p => makeCard(p)).join('');
+          grid.querySelectorAll('.p-card').forEach((c, i) => {
+            c.style.opacity = '0'; c.style.transform = 'translateY(16px)';
+            setTimeout(() => { c.style.transition = '.3s ease'; c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, i * 60 + 50);
+          });
+        } else {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--gray5)">🔍 لم يتم العثور على نتائج</div>';
+        }
+      }
+
+      // Update search input if query present
+      const searchInput = document.getElementById('search-input');
+      if (searchInput && q) searchInput.value = q;
+
+      // Update results count
+      const countEl = document.querySelector('.results-count');
+      if (countEl) countEl.innerHTML = `عرض <strong>${filtered.length}</strong> من <strong>${products.length}</strong> منتج`;
     });
   </script>
 <script src="enhancements.js?v=11"></script>
