@@ -306,10 +306,12 @@ input,select,textarea{font-family:inherit}
   position:relative;cursor:pointer;
   box-shadow:var(--sh);
 }
-.p-card:hover{
-  transform:translateY(-10px) scale(1.02);
-  box-shadow:var(--sh-hover);
-  border-color:var(--accent);
+@media (hover: hover) {
+  .p-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--sh-hover);
+    border-color: var(--accent);
+  }
 }
 .p-card-img{
   position:relative;aspect-ratio:1;
@@ -317,15 +319,19 @@ input,select,textarea{font-family:inherit}
   display:flex;align-items:center;justify-content:center;overflow:hidden;
   transition:background 0.3s ease;
 }
-.p-card:hover .p-card-img{
-  background:linear-gradient(135deg,var(--p-light),var(--gray0));
+@media (hover: hover) {
+  .p-card:hover .p-card-img {
+    background: linear-gradient(135deg, var(--p-light), var(--gray0));
+  }
 }
 .p-emoji{
   font-size:72px;
   transition:transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.p-card:hover .p-emoji{
-  transform:scale(1.2) rotate(5deg);
+@media (hover: hover) {
+  .p-card:hover .p-emoji {
+    transform: scale(1.2) rotate(5deg);
+  }
 }
 .p-badge{
   position:absolute;top:12px;right:12px;
@@ -340,7 +346,12 @@ input,select,textarea{font-family:inherit}
   display:flex;flex-direction:column;gap:6px;
   opacity:0;transform:translateX(-8px);transition:var(--t)
 }
-.p-card:hover .p-actions{opacity:1;transform:translateX(0)}
+@media (hover: hover) {
+  .p-card:hover .p-actions { opacity: 1; transform: translateX(0); }
+}
+@media (hover: none) {
+  .p-actions { opacity: 1; transform: translateX(0); }
+}
 .p-action-btn{
   width:34px;height:34px;border-radius:10px;
   background:#fff;box-shadow:var(--sh2);
