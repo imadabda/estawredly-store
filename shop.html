@@ -180,6 +180,9 @@
     }
   </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#3b82f6" />
+  <link rel="apple-touch-icon" href="logo.jpg" />
 </head>
 <body>
 
@@ -632,5 +635,16 @@
     });
   </script>
 <script src="enhancements.js?v=11"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').then(reg => {
+        console.log('SW registered: ', reg.scope);
+      }).catch(err => {
+        console.log('SW registration failed: ', err);
+      });
+    });
+  }
+</script>
 </body>
 </html>

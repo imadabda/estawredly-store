@@ -43,10 +43,16 @@ img{max-width:100%;display:block}
   position:sticky;top:0;height:100vh;overflow-y:auto;
   display:flex;flex-direction:column;transition:transform .3s;
 }
+
+.admin-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(3px);z-index:199;opacity:0;visibility:hidden;transition:var(--t)}
+.admin-overlay.open{opacity:1;visibility:visible}
+.sb-close-btn{display:none;position:absolute;left:15px;top:25px;font-size:18px;color:var(--text);background:var(--bg3);border:none;border-radius:8px;width:32px;height:32px;cursor:pointer}
 @media(max-width:900px){
   .sidebar{position:fixed;inset:0 auto 0 auto;right:0;width:280px;z-index:200;transform:translateX(100%)}
   .sidebar.open{transform:translateX(0)}
+  .sb-close-btn{display:flex;align-items:center;justify-content:center}
 }
+
 .sb-logo{padding:24px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
 .sb-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--p),var(--purple));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .sb-logo-text{font-size:17px;font-weight:900;color:#fff}
@@ -348,6 +354,9 @@ tr:last-child td{border-bottom:none}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .spin{animation:spin 2s linear infinite}
 </style>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#3b82f6" />
+  <link rel="apple-touch-icon" href="logo.jpg" />
 </head>
 <body>
 
@@ -451,16 +460,18 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <!-- LAYOUT -->
+<div class="admin-overlay" id="admin-overlay" onclick="toggleAdminSidebar()"></div>
 <div class="admin-layout">
 
   <!-- ══ SIDEBAR ══ -->
   <aside class="sidebar" id="sidebar">
     <div class="sb-logo">
       <div class="sb-logo-icon">🛍️</div>
-      <div>
+            <div>
         <div class="sb-logo-text">إستوردلي</div>
         <div class="sb-logo-sub">ADMIN PANEL</div>
       </div>
+      <button class="sb-close-btn" onclick="toggleAdminSidebar()">✕</button>
     </div>
 
     <nav class="sb-nav">
@@ -534,7 +545,7 @@ tr:last-child td{border-bottom:none}
 
     <!-- Top Bar -->
     <div class="topbar">
-      <button class="topbar-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+      <button class="topbar-menu-btn" onclick="toggleAdminSidebar()">☰</button>
       <div class="topbar-search">
         <span class="s-icon">🔍</span>
         <input type="text" placeholder="بحث سريع في المنتجات..." id="global-search" oninput="globalSearch(this.value)"/>
@@ -868,6 +879,11 @@ tr:last-child td{border-bottom:none}
 </div><!-- end admin-layout -->
 
 <script>
+function toggleAdminSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('admin-overlay').classList.toggle('open');
+}
+
 /* ══════════════════════════════════════
    ADMIN DASHBOARD LOGIC
    ══════════════════════════════════════ */
@@ -1420,6 +1436,17 @@ document.addEventListener('DOMContentLoaded', () => {
   loadAdminProducts();
   loadAdminOrders();
 });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').then(reg => {
+        console.log('SW registered: ', reg.scope);
+      }).catch(err => {
+        console.log('SW registration failed: ', err);
+      });
+    });
+  }
 </script>
 </body>
 </html>

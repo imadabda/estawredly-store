@@ -136,6 +136,9 @@
       .how-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#3b82f6" />
+  <link rel="apple-touch-icon" href="logo.jpg" />
 </head>
 <body>
 
@@ -548,5 +551,16 @@
 <button class="btt-btn" id="btt-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script src="main.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').then(reg => {
+        console.log('SW registered: ', reg.scope);
+      }).catch(err => {
+        console.log('SW registration failed: ', err);
+      });
+    });
+  }
+</script>
 </body>
 </html>
