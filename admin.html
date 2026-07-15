@@ -353,6 +353,14 @@ tr:last-child td{border-bottom:none}
 .toast-admin.show{transform:translateY(0)}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .spin{animation:spin 2s linear infinite}
+
+@media(max-width:900px){
+  .topbar { padding: 12px; gap: 8px; flex-wrap: wrap; }
+  .topbar-search { order: 3; max-width: 100%; min-width: 100%; margin-top: 5px; }
+  .tp-name, .topbar-divider { display: none; }
+  .topbar-right { margin-right: auto; gap: 4px; }
+}
+
 </style>
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#3b82f6" />
@@ -601,7 +609,7 @@ tr:last-child td{border-bottom:none}
           </div>
           <div class="stat-card red">
             <div class="stat-icon">👥</div>
-            <div class="stat-val">1,247</div>
+            <div class="stat-val" id="stat-users">1,247</div>
             <div class="stat-label">العملاء المسجلين</div>
             <div class="stat-change up">↑ 43 عميل جديد اليوم</div>
           </div>
@@ -952,8 +960,11 @@ function updateStats() {
   document.getElementById('stat-pending') && (document.getElementById('stat-pending').textContent = storeOrders.filter(o=>o.status==='pending').length);
   const pcEl = document.getElementById('products-count');
   if(pcEl) pcEl.textContent = adminProducts.length;
-  const psEl = document.getElementById('products-subtitle');
+    const psEl = document.getElementById('products-subtitle');
   if(psEl) psEl.textContent = `${adminProducts.length} منتج إجمالاً، ${adminProducts.filter(p=>p.active!==false).length} منشور`;
+  const usersCount = (typeof Store !== 'undefined') ? Store.getUsers().length : 0;
+  const suEl = document.getElementById('stat-users');
+  if(suEl) suEl.textContent = usersCount;
 }
 
 /* ── Revenue chart ── */
