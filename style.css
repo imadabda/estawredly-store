@@ -294,7 +294,7 @@ input,select,textarea{font-family:inherit}
   width: 100%;
   aspect-ratio: 1;
   border-radius: 14px;
-  background: #f8f9fa;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -306,6 +306,7 @@ input,select,textarea{font-family:inherit}
   height: 80%;
   object-fit: contain;
   mix-blend-mode: multiply;
+  filter: contrast(1.05) brightness(1.05);
 }
 .tc-name {
   font-size: 13px;
