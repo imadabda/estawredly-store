@@ -259,20 +259,65 @@ input,select,textarea{font-family:inherit}
 .dot.active{width:24px;border-radius:4px;background:#fff}
 
 /* ════════════════════════════════════════
-   CATEGORIES STRIP
+   TAOBAO STYLE CATEGORIES
    ════════════════════════════════════════ */
-.cats-strip{padding:24px 0;border-bottom:1px solid rgba(0,0,0,0.03);background:#fff}
-.cats-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-.cats-scroll::-webkit-scrollbar{display:none}
-.cat-pill{
-  display:flex;align-items:center;gap:6px;padding:10px 24px;
-  border-radius:50px;border:1px solid rgba(0,0,0,0.06);background:var(--gray0);
-  font-size:14px;font-weight:600;color:var(--gray7);
-  cursor:pointer;white-space:nowrap;transition:all 0.3s ease;flex-shrink:0
+.taobao-cats-sec { padding: 10px 0; background: #fff; }
+.taobao-cats {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-auto-flow: column;
+  grid-auto-columns: calc(20% - 10px);
+  gap: 16px 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 12px;
+  scrollbar-width: none;
 }
-.cat-pill span{display:none} /* Hide emojis if any leak through */
-.cat-pill:hover{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:var(--sh-hover);transform:translateY(-4px) scale(1.05)}
-.cat-pill.active{border-color:var(--p);background:var(--p);color:#fff}
+.taobao-cats::-webkit-scrollbar { display: none; }
+@media(max-width: 600px) {
+  .taobao-cats {
+    grid-auto-columns: calc(20% - 8px);
+    gap: 12px 8px;
+  }
+}
+.tc-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: transform 0.2s;
+}
+.tc-item:hover { transform: scale(1.05); }
+.tc-icon {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+.tc-icon img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.tc-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  white-space: nowrap;
+}
+@media(max-width: 600px) {
+  .tc-name { font-size: 11px; }
+  .tc-icon { border-radius: 12px; }
+}
 
 /* ════════════════════════════════════════
    FLASH SALE
