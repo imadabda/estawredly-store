@@ -1,3 +1,11 @@
+<?php
+session_start();
+// التحقق من صلاحية الإدارة
+if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+    header("Location: admin-login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
