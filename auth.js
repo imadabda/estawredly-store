@@ -136,10 +136,54 @@ async function logoutUser() {
 }
 
 // 4. Handle Google Login
-// Called by the Google Sign-in button in index.html
-function handleGoogleLogin() {
-    // Note: The Google Identity Services library requires a client ID
-    // You need to replace 'YOUR_GOOGLE_CLIENT_ID' with your real Client ID.
-    // For now, this acts as a placeholder prompt until the user provides the ID.
-    alert('قم بإنشاء Google Client ID ثم أضفه إلى كود Auth!');
+const GOOGLE_CLIENT_ID = '244006724557-a845r5ljc7rutv6hht4m1kr537de3r42.apps.googleusercontent.com';
+
+window.onload = function () {
+    // Note: The google GIS script must be loaded. We rely on the script tag in index.html.
+    if(typeof google !== 'undefined' && google.accounts) {
+        google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: handleGoogleResponse
+        });
+
+        const loginContainer = document.getElementById('google-login-container');
+        if(loginContainer) {
+            google.accounts.id.renderButton(
+                loginContainer,
+                { theme: "outline", size: "large", width: 300, text: "signin_with" }
+            );
+        }
+
+        const signupContainer = document.getElementById('google-signup-container');
+        if(signupContainer) {
+            google.accounts.id.renderButton(
+                signupContainer,
+                { theme: "outline", size: "large", width: 300, text: "signup_with" }
+            );
+        }
+
+        // Optional: Also display the One Tap dialog
+        // google.accounts.id.prompt();
+    }
+};
+
+async function handleGoogleResponse(response) {
+    try {
+        const res = await fetch('api/google_auth.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_token: response.credential })
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+            showToast('تم تسجيل الدخول بحساب جوجل بنجاح! 👋', 'success');
+            updateUIAfterLogin(data.user);
+            if(window.closeModal) closeModal('auth');
+        } else {
+            showToast(data.message, 'error');
+        }
+    } catch (err) {
+        showToast('حدث خطأ في الاتصال بالسيرفر', 'error');
+    }
 }
