@@ -1,17 +1,17 @@
 const CACHE_NAME = 'estawredly-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/shop.html',
-  '/product.html',
-  '/checkout.html',
-  '/style.css',
-  '/enhancements.css',
-  '/main.js',
-  '/store.js',
-  '/products_db.js',
-  '/enhancements.js',
-  '/logo.jpg'
+  './',
+  './index.html',
+  './shop.html',
+  './product.html',
+  './checkout.html',
+  './style.css',
+  './enhancements.css',
+  './main.js',
+  './store.js',
+  './products_db.js',
+  './enhancements.js',
+  './logo.jpg'
 ];
 
 self.addEventListener('install', event => {
