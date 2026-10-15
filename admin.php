@@ -1149,6 +1149,7 @@ tr:last-child td{border-bottom:none}
                 <th style="padding:10px 12px;">الماركة</th>
                 <th style="padding:10px 12px;">السعر</th>
                 <th style="padding:10px 12px;">الكرتونة</th>
+                <th style="padding:10px 12px;">حجم CBM</th>
                 <th style="padding:10px 12px;">كود SKU</th>
                 <th style="padding:10px 12px;">كود المصنع</th>
               </tr>
@@ -3789,6 +3790,7 @@ function renderProducts(list, page = 1) {
           <div style="display:flex; gap:6px; flex-wrap:wrap; font-size:11px; margin:4px 0 8px;">
             ${p.product_code ? `<span style="background:var(--bg3); color:var(--text2); padding:2px 6px; border-radius:4px; border:1px solid var(--border); font-family:monospace;">SKU: <strong style="color:var(--text);">${p.product_code}</strong></span>` : ''}
             ${p.factory_code ? `<span style="background:var(--bg3); color:var(--text2); padding:2px 6px; border-radius:4px; border:1px solid var(--border); font-family:monospace;">مصنع: <strong style="color:var(--text);">${p.factory_code}</strong></span>` : ''}
+            ${p.cbm ? `<span style="background:rgba(59,130,246,0.1); color:#3b82f6; padding:2px 6px; border-radius:4px; font-size:10.5px;" title="حجم الكرتونة CBM">📐 ${p.cbm} م³</span>` : ''}
             ${p.ref_note ? `<span style="background:rgba(234,179,8,0.1); color:#ca8a04; padding:2px 6px; border-radius:4px; font-size:10.5px;" title="${p.ref_note}">📌 ${p.ref_note}</span>` : ''}
           </div>
           <div class="pac-price">
@@ -4110,6 +4112,7 @@ function openModal(p) {
   document.getElementById('f-brand').value = p?.brand || '';
 
   document.getElementById('f-pieces-per-carton').value = (p && p.pieces_per_carton) ? p.pieces_per_carton : '';
+  document.getElementById('f-cbm').value = (p && (p.cbm !== undefined && p.cbm !== null && p.cbm !== '')) ? p.cbm : ((p && p.carton_cbm) ? p.carton_cbm : '');
   document.getElementById('f-product-code').value = p?.product_code || '';
   if (typeof updateFactoryCodesSelect === 'function') {
     updateFactoryCodesSelect(p?.factory_code || '');
@@ -4206,6 +4209,8 @@ async function saveProduct() {
   const cartonPiecesStr = document.getElementById('f-pieces-per-carton').value;
   const piecesVal = parseInt(cartonPiecesStr);
   const pieces_per_carton = isNaN(piecesVal) || piecesVal < 1 ? 0 : piecesVal;
+  const cbmRaw = parseFloat(document.getElementById('f-cbm').value);
+  const cbm = (!isNaN(cbmRaw) && cbmRaw > 0) ? cbmRaw : null;
   const product_code = document.getElementById('f-product-code').value.trim();
   const factory_code = document.getElementById('f-factory-code').value.trim();
   
@@ -4270,6 +4275,7 @@ async function saveProduct() {
     reviews: parseInt(document.getElementById('f-reviews').value) || 0,
     stock: stock,
     pieces_per_carton,
+    cbm: cbm,
     product_code,
     factory_code,
     ref_note: document.getElementById('f-ref-note').value.trim(),
@@ -4371,6 +4377,7 @@ function downloadProductTemplate() {
       'التصنيف (إجباري)',
       'الماركة (اختياري)',
       'عدد القطع في الكرتونة (إجباري)',
+      'حجم الكرتونة CBM (اختياري)',
       'كود المنتج SKU (اختياري)',
       'كود المصنع (اختياري)',
       'ملاحظات الرقم المرجعي (اختياري)',
@@ -4389,6 +4396,7 @@ function downloadProductTemplate() {
         'مماسح مايكروفايبر',
         'KLEANER',
         24,
+        0.065,
         'KL-MOP-101',
         'FC-7721',
         'الرف B-04 / كرتونة قوية',
@@ -4405,6 +4413,7 @@ function downloadProductTemplate() {
         'اسفنجات جلي',
         '',
         48,
+        0.038,
         'SP-GL-202',
         'FC-3390',
         'الرف C-11',
@@ -4421,6 +4430,7 @@ function downloadProductTemplate() {
         'جاروف مع مكنسه',
         'KLEANER',
         36,
+        0.052,
         'KL-DUST-303',
         'FC-5512',
         'الرف A-02',
@@ -4434,7 +4444,7 @@ function downloadProductTemplate() {
     const ws = XLSX.utils.aoa_to_sheet([headers, ...sampleRows]);
     ws['!cols'] = [
       { wch: 35 }, { wch: 18 }, { wch: 18 }, { wch: 18 },
-      { wch: 22 }, { wch: 18 }, { wch: 25 }, { wch: 20 },
+      { wch: 22 }, { wch: 18 }, { wch: 25 }, { wch: 22 }, { wch: 20 },
       { wch: 18 }, { wch: 25 }, { wch: 40 }, { wch: 45 },
       { wch: 18 }, { wch: 20 }
     ];
@@ -4451,6 +4461,7 @@ function downloadProductTemplate() {
       ['التصنيف', 'إجباري', 'اسم القسم أو التصنيف (مثال: اسفنجات جلي، مماسح، فراشي تنظيف)'],
       ['الماركة', 'اختياري', 'الماركة التجارية للمنتج (مثال: KLEANER، أو اتركه فارغاً)'],
       ['عدد القطع في الكرتونة', 'إجباري', 'عدد القطع المعبأة داخل كل كرتونة (افتراضي 1 إذا بيع بالقطعة)'],
+      ['حجم الكرتونة CBM', 'اختياري', 'حجم الكرتونة بالمتر المكعب CBM، مثال: 0.045'],
       ['كود المنتج SKU', 'اختياري', 'رمز التخزين أو الباركود، وإذا كان موجوداً سابقاً سيتم تحديث المنتج بدلاً من تكراره'],
       ['كود المصنع', 'اختياري', 'رقم أو كود المنتج لدى المصنع المورد'],
       ['ملاحظات الرقم المرجعي', 'اختياري', 'مكان التخزين أو رقم الرف في المستودع'],
@@ -4543,6 +4554,7 @@ function processImportRows(rows) {
     if (catCanonMap[cat]) cat = catCanonMap[cat];
     const brand = getVal(['الماركة', 'brand', 'الماركة التجارية', 'شركة']);
     const rawCarton = parseInt(getVal(['عدد القطع في الكرتونة', 'pieces_per_carton', 'الكرتونة', 'قطع الكرتونة']));
+    const rawCbm = parseFloat(getVal(['حجم الكرتونة CBM', 'حجم الكرتونة', 'حجم الكرتونه', 'cbm', 'carton_cbm', 'الحجم', 'حجم']));
     const sku = getVal(['كود المنتج', 'product_code', 'sku', 'كود']);
     const factory = getVal(['كود المصنع', 'factory_code', 'المصنع']);
     const refNote = getVal(['ملاحظات الرقم المرجعي', 'ref_note', 'ملاحظات', 'الرف', 'المرجع']);
@@ -4560,6 +4572,7 @@ function processImportRows(rows) {
       cat: cat || 'عام',
       brand: brand || '',
       pieces_per_carton: !isNaN(rawCarton) && rawCarton > 0 ? rawCarton : 1,
+      cbm: !isNaN(rawCbm) && rawCbm > 0 ? rawCbm : null,
       product_code: sku || ('SKU-' + (Date.now() % 100000) + '-' + (index + 1)),
       factory_code: factory || '',
       ref_note: refNote || '',
@@ -4794,6 +4807,7 @@ function openExcelModal(filename, products) {
         <td style="padding:8px 12px; color:var(--text2);">${p.brand || '-'}</td>
         <td style="padding:8px 12px; font-weight:bold; color:var(--p);">₪${p.price}</td>
         <td style="padding:8px 12px; color:var(--text2);">${p.pieces_per_carton} قطع</td>
+        <td style="padding:8px 12px; color:#3b82f6; font-weight:bold;">${p.cbm ? (p.cbm + ' م³') : '-'}</td>
         <td style="padding:8px 12px; font-family:monospace; font-size:11px; color:var(--text3);">${p.product_code}</td>
         <td style="padding:8px 12px; font-family:monospace; font-size:11px; color:var(--p); font-weight:bold;">${p.factory_code || '-'}</td>
       </tr>
@@ -4881,6 +4895,7 @@ function exportProducts() {
       'السعر القديم',
       'سعر التكلفة',
       'عدد القطع بالكرتونة',
+      'حجم الكرتونة CBM',
       'كود المنتج SKU',
       'كود المصنع',
       'ملاحظات الرقم المرجعي',
@@ -4899,6 +4914,7 @@ function exportProducts() {
       p.oldPrice ? parseFloat(p.oldPrice) : '',
       p.costPrice ? parseFloat(p.costPrice) : '',
       p.pieces_per_carton || 1,
+      p.cbm || '',
       p.product_code || '',
       p.factory_code || '',
       p.ref_note || '',
@@ -4913,7 +4929,7 @@ function exportProducts() {
     const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
     ws['!cols'] = [
       { wch: 35 }, { wch: 22 }, { wch: 18 }, { wch: 15 },
-      { wch: 15 }, { wch: 15 }, { wch: 22 }, { wch: 20 },
+      { wch: 15 }, { wch: 15 }, { wch: 22 }, { wch: 18 }, { wch: 20 },
       { wch: 18 }, { wch: 25 }, { wch: 35 }, { wch: 12 },
       { wch: 12 }, { wch: 12 }, { wch: 15 }
     ];
@@ -4921,8 +4937,8 @@ function exportProducts() {
     XLSX.writeFile(wb, `منتجات_استوردلي_${new Date().toISOString().slice(0,10)}.xlsx`);
     showToast('📥 تم تصدير ملف Excel بنجاح');
   } else {
-    const header = 'الاسم,التصنيف,الماركة,السعر,السعر القديم,الكرتونة,كود SKU\n';
-    const rows = adminProducts.map(p=>`"${p.name}","${p.cat}","${p.brand||''}",${p.price},${p.oldPrice||''},${p.pieces_per_carton||1},"${p.product_code||''}"`).join('\n');
+    const header = 'الاسم,التصنيف,الماركة,السعر,السعر القديم,الكرتونة,حجم CBM,كود SKU\n';
+    const rows = adminProducts.map(p=>`"${p.name}","${p.cat}","${p.brand||''}",${p.price},${p.oldPrice||''},${p.pieces_per_carton||1},"${p.cbm||''}","${p.product_code||''}"`).join('\n');
     const blob = new Blob(['\uFEFF'+header+rows], {type:'text/csv;charset=utf-8'});
     const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='products.csv'; a.click();
     showToast('📥 تم تصدير CSV');

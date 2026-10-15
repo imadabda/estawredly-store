@@ -886,6 +886,12 @@ function openModal(p) {
   document.getElementById('f-stars').value = p?.stars || '';
   document.getElementById('f-reviews').value = p?.reviews || '';
   document.getElementById('f-stock').value = (p && p.stock !== undefined) ? p.stock : '';
+  if (document.getElementById('f-pieces-per-carton')) {
+    document.getElementById('f-pieces-per-carton').value = (p && p.pieces_per_carton) ? p.pieces_per_carton : '';
+  }
+  if (document.getElementById('f-cbm')) {
+    document.getElementById('f-cbm').value = (p && (p.cbm !== undefined && p.cbm !== null && p.cbm !== '')) ? p.cbm : ((p && p.carton_cbm) ? p.carton_cbm : '');
+  }
   document.getElementById('f-tab').value = p?.tab || 'all';
   document.getElementById('f-img-url').value = p?.img || '';
 
@@ -943,6 +949,14 @@ function saveProduct() {
     .filter(v => v.name && v.name.trim() !== '' && Array.isArray(v.options) && v.options.length > 0)
     .map(v => ({ name: v.name.trim(), options: [...new Set(v.options)] }));
 
+  const cartonPiecesEl = document.getElementById('f-pieces-per-carton');
+  const cartonPiecesStr = cartonPiecesEl ? cartonPiecesEl.value : '';
+  const piecesVal = parseInt(cartonPiecesStr);
+  const pieces_per_carton = isNaN(piecesVal) || piecesVal < 1 ? (pToEdit?.pieces_per_carton || 1) : piecesVal;
+  const cbmEl = document.getElementById('f-cbm');
+  const cbmRaw = cbmEl ? parseFloat(cbmEl.value) : NaN;
+  const cbm = (!isNaN(cbmRaw) && cbmRaw > 0) ? cbmRaw : (pToEdit?.cbm || null);
+
   const product = {
     id: editingId || (Date.now()),
     name,
@@ -954,6 +968,8 @@ function saveProduct() {
     stars: parseFloat(document.getElementById('f-stars').value) || 4.5,
     reviews: parseInt(document.getElementById('f-reviews').value) || 0,
     stock: stock,
+    pieces_per_carton,
+    cbm,
     tab: document.getElementById('f-tab').value || 'all',
     img: document.getElementById('f-img-url').value || document.getElementById('img-preview-el').src || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80',
     active: pToEdit ? pToEdit.active : true,

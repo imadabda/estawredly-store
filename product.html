@@ -905,6 +905,7 @@ function render() {
           <div style="padding:12px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; font-size:14px; color:#166534; display:flex; flex-direction:column; gap:4px; margin-bottom: 15px; text-align: right;">
             <span>📦 <strong>البيع بالكرتونة:</strong> الكرتونة تحتوي على <strong>${product.pieces_per_carton}</strong> قطعة</span>
             <span>💰 <strong>سعر الكرتونة:</strong> <strong style="font-size:16px;">₪${cartonPrice.toFixed(2)}</strong></span>
+            ${product.cbm ? `<span>📐 <strong>حجم الكرتونة:</strong> <strong>${product.cbm}</strong> م³ (CBM)</span>` : ''}
           </div>
         `;
         const qtyLabel = document.querySelector('.qty-box .prod-option-label');
